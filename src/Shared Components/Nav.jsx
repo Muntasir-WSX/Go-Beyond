@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   TreePalm,
   TreePalmIcon,
+  Anchor,
 } from "lucide-react";
 
 const Nav = () => {
@@ -19,7 +20,7 @@ const Nav = () => {
       {/* 1. Logo Section ✈️ */}
       <div className="flex items-center gap-2 cursor-pointer group">
         <div className="bg-[#ff5e37] p-2 rounded-full flex items-center justify-center transition-transform group-hover:rotate-12">
-          <TreePalmIcon size={20} className="text-white fill-current" />
+          <Anchor size={20} className="text-white fill-current" />
         </div>
         <h1 className="text-2xl font-bold tracking-tight">
           Go <span className="text-gray-400">Beyond</span>
