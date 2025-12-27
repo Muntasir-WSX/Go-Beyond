@@ -95,7 +95,7 @@ const StatsHome = () => {
                 key={index}
                 className="text-center flex flex-col items-center group"
               >
-                <div className="text-2xl md:text-3xl font-bold text-[#ff5e37] mb-4 flex tracking-tight">
+                <div className="text-3xl md:text-5xl font-bold text-[#ff5e37] mb-4 flex tracking-tight">
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </div>
 

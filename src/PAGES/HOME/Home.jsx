@@ -22,6 +22,8 @@ import rangamati from "../../assets/rangamati.jpg";
 import FacilityHome from "./FacilityHome";
 import StatsHome from "./StatsHome";
 import DestinationGrid from "./DestinationGrid";
+import GetToKnowUs from "../../Shared Components/GetToKnowUs";
+import TourTypes from "../../Shared Components/TourTypes";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -150,14 +152,24 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. Stats Section - Removed top padding to merge with previous */}
+      {/* 4. Stats Section  */}
       <section className="pb-2 bg-white">
         <StatsHome />
       </section>
 
-      {/* 5. Destination Grid Section - Reduced padding */}
+      {/* 5. Destination Grid Section */}
       <section className="py-2 bg-white">
         <DestinationGrid />
+      </section>
+
+      {/* 6. Get To Know Us Section */}
+      <section className="py-2 bg-white">
+        <GetToKnowUs />
+      </section>
+
+      {/* 7. Tour Types Section */}
+      <section className="py-2 bg-white">
+        <TourTypes />
       </section>
 
     </main>

@@ -1,7 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-
-// ইম্পোর্ট করা ইমেজগুলো
 import bandarban from "../../assets/bandarban.jpg";
 import coxBazar from "../../assets/cox bazar.jpg";
 import sajek from "../../assets/sajek.jpg";
@@ -26,7 +24,7 @@ const DestinationGrid = () => {
         >
           Our destination lists
         </h4>
-        <h2 className="text-3xl md:text-4xl font-black text-[#1a1b2e] leading-tight tracking-tight uppercase">
+        <h2 className="text-3xl md:text-5xl font-black text-[#1a1b2e] leading-tight tracking-tight uppercase">
           Checkout Beautiful <br /> Places Around The World
         </h2>
       </div>
