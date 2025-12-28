@@ -15,7 +15,7 @@ import {
 const Nav = () => {
   const [isUserOpen, setIsUserOpen] = useState(false);
 
-  // রাউটার অনুযায়ী পাথগুলো সেট করা হয়েছে
+  
   const navLinks = [
     { name: "Home", path: "/", icon: <Home size={18} /> },
     { name: "All Packages", path: "/packages", icon: <Briefcase size={18} /> },
@@ -23,7 +23,7 @@ const Nav = () => {
   ];
 
   return (
-    <div className="drawer z-[100]">
+    <div className="drawer z-100">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       
       <div className="drawer-content flex flex-col">

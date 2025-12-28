@@ -50,15 +50,15 @@ const NotAMember = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="w-full lg:w-1/2 relative flex justify-center items-center h-[300px] lg:h-[400px]"
+            className="w-full lg:w-1/2 relative flex justify-center items-center h-75 lg:h-100"
           >
             {/* Inner container to hold phones together */}
-            <div className="relative w-full max-w-[280px] sm:max-w-[320px] h-full flex justify-center items-center">
+            <div className="relative w-full max-w-70 sm:max-w-[320px] h-full flex justify-center items-center">
               
               {/* Dark Phone (Left) */}
               <motion.div
                 style={{ rotate: -12 }}
-                className="absolute left-0 sm:left-4 w-28 h-52 sm:w-36 sm:h-64 bg-[#1a1b2e] rounded-[24px] border-[5px] border-[#2a2b3e] shadow-2xl overflow-hidden flex flex-col items-center justify-center z-10"
+                className="absolute left-0 sm:left-4 w-28 h-52 sm:w-36 sm:h-64 bg-[#1a1b2e] rounded-3xl border-[5px] border-[#2a2b3e] shadow-2xl overflow-hidden flex flex-col items-center justify-center z-10"
               >
                 <div className="absolute top-2.5 w-7 h-1 bg-gray-700 rounded-full"></div>
                 <div className="text-white flex flex-col items-center gap-2">
@@ -72,7 +72,7 @@ const NotAMember = () => {
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 style={{ rotate: 8 }}
-                className="absolute right-0 sm:right-4 w-28 h-52 sm:w-36 sm:h-64 bg-[#ff5e37] rounded-[24px] border-[5px] border-white shadow-2xl overflow-hidden flex flex-col items-center justify-center z-20"
+                className="absolute right-0 sm:right-4 w-28 h-52 sm:w-36 sm:h-64 bg-[#ff5e37] rounded-3xl border-[5px] border-white shadow-2xl overflow-hidden flex flex-col items-center justify-center z-20"
               >
                 <div className="absolute top-2.5 w-7 h-1 bg-white/40 rounded-full"></div>
                 <div className="text-white flex flex-col items-center gap-2 text-center">

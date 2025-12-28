@@ -79,7 +79,7 @@ const TeamUs = () => {
                                     className="w-full h-80 object-cover object-top filter grayscale group-hover:grayscale-0 transition-all duration-500"
                                 />
                                 {/* Social Icons Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#ff5e37]/90 to-transparent flex items-end justify-center pb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute inset-0 bg-linear-to-t from-[#ff5e37]/90 to-transparent flex items-end justify-center pb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <div className="flex gap-4">
                                         {member.social.facebook && (
                                             <a href={member.social.facebook} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#1a1b2e] transition-colors bg-white/20 p-2 rounded-full backdrop-blur-sm">
