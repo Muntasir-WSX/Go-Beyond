@@ -24,6 +24,8 @@ import StatsHome from "./StatsHome";
 import DestinationGrid from "./DestinationGrid";
 import GetToKnowUs from "../../Shared Components/GetToKnowUs";
 import TourTypes from "../../Shared Components/TourTypes";
+import NotAMember from "../../Shared Components/NotAMember";
+import Partners from "../../Shared Components/Partners";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -170,6 +172,16 @@ const Home = () => {
       {/* 7. Tour Types Section */}
       <section className="py-2 bg-white">
         <TourTypes />
+      </section>
+
+      {/* 8. Partners Section */}
+      <section className="py-2 bg-white">
+        <Partners />
+      </section>
+
+      {/* 9. Not a Member Section */}
+      <section className="py-2 bg-white">
+        <NotAMember />
       </section>
 
     </main>
