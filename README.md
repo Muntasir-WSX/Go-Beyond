@@ -1,7 +1,3 @@
-Alright, clean, recruiter-ready README বানাই—fluff না, but still looks 🔥. আমি একটু skeptical mindset নিয়ে লিখছি, যেন overclaim না হয়, আবার undersell-ও না করি.
-
----
-
 # 🌍 Go Beyond
 
 **A Tour Booking & Management Web Application**
