@@ -1,13 +1,101 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Anchor, Mail, Lock, User, UserPlus, ArrowLeft, Image as ImageIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import registerImg from "../../assets/login.jpg";
 import { FcGoogle } from 'react-icons/fc';
 
+import { updateProfile } from 'firebase/auth';
+// Toastify ইম্পোর্ট
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../../Context/AuthProvider';
+
 const Register = () => {
+    const { creatUser, setLoading, googleSignIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+
+    const handleGoogleRegister = () => {
+        googleSignIn()
+            .then(result => {
+                toast.success(' Registered with Google Successfully!', {
+                    position: "top-center",
+                    autoClose: 1500,
+                    theme: "dark",
+                    transition: Bounce,
+                });
+                
+                setTimeout(() => {
+                    navigate("/");
+                }, 1500);
+            })
+            .catch(error => {
+                setLoading(false);
+                toast.error(` ${error.message}`, {
+                    theme: "dark",
+                });
+            });
+    };
+
+    const handleRegister = e => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const photo = form.photo.value;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        // পাসওয়ার্ড ভ্যালিডেশন
+        if (password.length < 6) {
+            toast.error('Password must be at least 6 characters!', {
+                position: "top-center",
+                autoClose: 2000,
+                theme: "dark",
+                transition: Bounce,
+            });
+            return;
+        }
+
+        // ১. ইউজার তৈরি করা
+        creatUser(email, password)
+            .then(result => {
+                const user = result.user;
+                
+                // ২. প্রোফাইল আপডেট (নাম ও ছবি)
+                updateProfile(user, {
+                    displayName: name,
+                    photoURL: photo
+                })
+                .then(() => {
+                    // সফলতার টোস্ট
+                    toast.success('Registration Successful!', {
+                        position: "top-center",
+                        autoClose: 1500,
+                        theme: "dark",
+                        transition: Bounce,
+                    });
+
+                    setTimeout(() => {
+                        form.reset();
+                        navigate("/");
+                    }, 2000); // ২ সেকেন্ড পর রিডাইরেক্ট যাতে টোস্ট দেখা যায়
+                })
+                .catch(err => toast.error(err.message));
+            })
+            .catch(error => {
+                setLoading(false);
+                toast.error(`❌ ${error.message}`, {
+                    position: "top-center",
+                    theme: "dark",
+                });
+            });
+    };
+
     return (
         <div className="h-screen w-full flex flex-col lg:flex-row bg-white overflow-hidden">
+            {/* Toast Container এখানে রাখা হয়েছে যাতে মেসেজ দেখা যায় */}
+            <ToastContainer />
             
             {/* --- LEFT SIDE: FORM SECTION --- */}
             <div className="w-full lg:w-1/2 h-full flex items-center justify-center p-6 md:p-10 bg-white order-2 lg:order-1 overflow-y-auto lg:overflow-hidden">
@@ -20,47 +108,43 @@ const Register = () => {
                         <div className="w-12 h-1.5 bg-[#ff5e37] rounded-full"></div>
                     </div>
 
-                    <form className="space-y-3">
-                        {/* Name Field */}
+                    <form onSubmit={handleRegister} className="space-y-3">
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Full Name</label>
                             <div className="relative">
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="text" placeholder="John Doe" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
+                                <input required name="name" type="text" placeholder="Enter Your Name" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
                             </div>
                         </div>
 
-                        {/* Photo URL Field */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Photo URL</label>
                             <div className="relative">
                                 <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="text" placeholder="https://example.com/photo.jpg" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
+                                <input required name="photo" type="text" placeholder="https://example.com/photo.jpg" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
                             </div>
                         </div>
 
-                        {/* Email Field */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</label>
                             <div className="relative">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="email" placeholder="email@example.com" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
+                                <input required name="email" type="email" placeholder="email@example.com" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
                             </div>
                         </div>
 
-                        {/* Password Field */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Password</label>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="password" placeholder="••••••••" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
+                                <input required name="password" type="password" placeholder="••••••••" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
                             </div>
                             <p className="text-[9px] text-gray-400 font-medium leading-tight pt-1">
                                 * Min 6 chars, include uppercase & lowercase letters.
                             </p>
                         </div>
 
-                        <button className="w-full bg-[#1a1b2e] hover:bg-[#ff5e37] text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 uppercase text-xs tracking-widest shadow-lg mt-2 active:scale-95">
+                        <button  type="submit" className="w-full bg-[#1a1b2e] hover:bg-[#ff5e37] text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 uppercase text-xs tracking-widest shadow-lg mt-2 active:scale-95">
                             Create Account <UserPlus size={16} />
                         </button>
                     </form>
@@ -70,7 +154,7 @@ const Register = () => {
                         <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-[9px] font-bold text-gray-400 uppercase tracking-widest">Or Register With</span>
                     </div>
 
-                    <button className="w-full bg-white border-2 border-gray-100 hover:border-[#ff5e37] text-[#1a1b2e] font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-3 text-sm active:scale-95">
+                    <button onClick={handleGoogleRegister} className="w-full bg-white border-2 border-gray-100 hover:border-[#ff5e37] text-[#1a1b2e] font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-3 text-sm active:scale-95">
                         <FcGoogle size={20} />
                         <span className="tracking-tight">Sign up with Google</span>
                     </button>

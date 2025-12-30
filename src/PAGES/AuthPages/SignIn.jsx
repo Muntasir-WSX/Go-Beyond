@@ -1,22 +1,80 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Anchor, Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SignInPhoto from "../../assets/signInMain.jpg";
 import { FcGoogle } from 'react-icons/fc';
 
+// Toastify ইম্পোর্ট
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../../Context/AuthProvider';
+
 const SignIn = () => {
-    const signIn = e => {
+    const { logIn, setLoading, googleSignIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    // গুগল সাইন ইন হ্যান্ডলার
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => {
+                toast.success(`Welcome, ${result.user.displayName}!`, {
+                    position: "top-center",
+                    autoClose: 1500,
+                    theme: "dark",
+                });
+                setTimeout(() => navigate("/"), 1500);
+            })
+            .catch(error => {
+                setLoading(false);
+                toast.error(error.message);
+            });
+    };
+
+    const handleSignIn = e => {
         e.preventDefault();
-        // Handle sign-in logic here
+        
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log('Signing in with', { email, password });
 
-    }
+        // Firebase Login Logic
+        logIn(email, password)
+            .then(result => {
+                const user = result.user;
+                
+                // ১. সফলতার টোস্ট
+                toast.success(`Welcome back, ${user.displayName || 'Explorer'}!`, {
+                    position: "top-center",
+                    autoClose: 1500,
+                    theme: "dark",
+                    transition: Bounce,
+                });
+
+                // ২. অল্প সময় অপেক্ষা করে রিডাইরেক্ট (যাতে টোস্ট দেখা যায়)
+                setTimeout(() => {
+                    form.reset();
+                    navigate("/");
+                }, 1500);
+            })
+            .catch(error => {
+                console.error("Login Error:", error.message);
+                setLoading(false);
+                
+                // ৩. ব্যর্থতার টোস্ট
+                toast.error("Invalid email or password!", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    theme: "dark",
+                    transition: Bounce,
+                });
+            });
+    };
+
     return (
         <div className="h-screen w-full flex flex-col lg:flex-row bg-white overflow-hidden">
+            {/* ToastContainer অবশ্যই এখানে থাকতে হবে */}
+            <ToastContainer />
             
             {/* --- LEFT SIDE: IMAGE SECTION --- */}
             <div className="hidden lg:flex lg:w-1/2 h-full relative">
@@ -47,14 +105,12 @@ const SignIn = () => {
                         <div className="w-12 h-1.5 bg-[#ff5e37] rounded-full"></div>
                     </div>
 
-                    {/* Form Section */}
-
-                    <form onSubmit={signIn} className="space-y-4">
+                    <form onSubmit={handleSignIn} className="space-y-4">
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</label>
                             <div className="relative">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="email" name='email' placeholder="name@company.com" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
+                                <input required type="email" name='email' placeholder="Enter Your Email" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
                             </div>
                         </div>
 
@@ -62,11 +118,11 @@ const SignIn = () => {
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Password</label>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="password" name='password' placeholder="••••••••" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
+                                <input required type="password" name='password' placeholder="••••••••" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
                             </div>
                         </div>
 
-                        <button className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 uppercase text-xs tracking-widest shadow-lg shadow-orange-500/20">
+                        <button type="submit" className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 uppercase text-xs tracking-widest shadow-lg shadow-orange-500/20 active:scale-95">
                             Sign In <ArrowRight size={16} />
                         </button>
                     </form>
@@ -76,7 +132,7 @@ const SignIn = () => {
                         <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Or Continue With</span>
                     </div>
 
-                    <button className="w-full bg-white border-2 border-gray-100 hover:border-[#1a1b2e] text-[#1a1b2e] font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-3 text-sm">
+                    <button onClick={handleGoogleSignIn} type="button" className="w-full bg-white border-2 border-gray-100 hover:border-[#1a1b2e] text-[#1a1b2e] font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-3 text-sm active:scale-95">
                         <FcGoogle size={20} />
                         <span>Sign in with Google</span>
                     </button>
