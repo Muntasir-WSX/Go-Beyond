@@ -6,6 +6,15 @@ import SignInPhoto from "../../assets/signInMain.jpg";
 import { FcGoogle } from 'react-icons/fc';
 
 const SignIn = () => {
+    const signIn = e => {
+        e.preventDefault();
+        // Handle sign-in logic here
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log('Signing in with', { email, password });
+
+    }
     return (
         <div className="h-screen w-full flex flex-col lg:flex-row bg-white overflow-hidden">
             
@@ -38,12 +47,14 @@ const SignIn = () => {
                         <div className="w-12 h-1.5 bg-[#ff5e37] rounded-full"></div>
                     </div>
 
-                    <form className="space-y-4">
+                    {/* Form Section */}
+
+                    <form onSubmit={signIn} className="space-y-4">
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</label>
                             <div className="relative">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="email" placeholder="name@company.com" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
+                                <input type="email" name='email' placeholder="name@company.com" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
                             </div>
                         </div>
 
@@ -51,7 +62,7 @@ const SignIn = () => {
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Password</label>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                <input type="password" placeholder="••••••••" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
+                                <input type="password" name='password' placeholder="••••••••" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all" />
                             </div>
                         </div>
 

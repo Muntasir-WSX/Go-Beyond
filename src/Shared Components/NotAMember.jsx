@@ -77,7 +77,7 @@ const NotAMember = () => {
                 <div className="absolute top-2.5 w-7 h-1 bg-white/40 rounded-full"></div>
                 <div className="text-white flex flex-col items-center gap-2 text-center">
                   <div className="bg-white p-1.5 rounded-lg shadow-sm">
-                    <PlaneTakeoff size={20} className="text-[#ff5e37]" />
+                    <Anchor size={20} className="text-gray-700" />
                   </div>
                   <span className="font-black text-[8px] sm:text-[10px] tracking-tighter uppercase leading-none">Go Beyond</span>
                 </div>
