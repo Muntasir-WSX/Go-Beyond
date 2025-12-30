@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useContext } from "react"; // useContext ইম্পোর্ট করুন
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { UserPlus, LogIn, PlaneTakeoff, Anchor, Sparkles } from "lucide-react";
+import { UserPlus, LogIn, Anchor, Sparkles } from "lucide-react";
+import { AuthContext } from "../Context/AuthProvider"; // আপনার পাথ অনুযায়ী দিন
 
 const NotAMember = () => {
+  // Context থেকে ইউজার চেক করুন
+  const { user, loading } = useContext(AuthContext);
+
+  // লোডিং অবস্থায় কিছু দেখানোর দরকার নেই অথবা ইউজার থাকলে এই পুরো সেকশন রিটার্ন করবে না
+  if (loading || user) {
+    return null; 
+  }
+
   return (
     <section className="relative bg-[#f4f4f4] py-10 lg:py-20 overflow-hidden">
       {/* Background Pattern */}
@@ -45,17 +54,15 @@ const NotAMember = () => {
             </div>
           </motion.div>
 
-          {/* Right Visuals (Fixed Cross Position for Mobile/Tablet) */}
+          {/* Right Visuals */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="w-full lg:w-1/2 relative flex justify-center items-center h-75 lg:h-100"
           >
-            {/* Inner container to hold phones together */}
             <div className="relative w-full max-w-70 sm:max-w-[320px] h-full flex justify-center items-center">
-              
-              {/* Dark Phone (Left) */}
+              {/* Dark Phone */}
               <motion.div
                 style={{ rotate: -12 }}
                 className="absolute left-0 sm:left-4 w-28 h-52 sm:w-36 sm:h-64 bg-[#1a1b2e] rounded-3xl border-[5px] border-[#2a2b3e] shadow-2xl overflow-hidden flex flex-col items-center justify-center z-10"
@@ -67,7 +74,7 @@ const NotAMember = () => {
                 </div>
               </motion.div>
 
-              {/* Orange Phone (Right - Crossed over) */}
+              {/* Orange Phone */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}

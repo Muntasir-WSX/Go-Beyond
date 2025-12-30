@@ -26,6 +26,7 @@ import GetToKnowUs from "../../Shared Components/GetToKnowUs";
 import TourTypes from "../../Shared Components/TourTypes";
 import NotAMember from "../../Shared Components/NotAMember";
 import Partners from "../../Shared Components/Partners";
+import UserReview from "../../Shared Components/UserRivew";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -181,7 +182,7 @@ const Home = () => {
 
       {/* 9. Not a Member Section */}
       <section className="py-2 bg-white">
-        <NotAMember />
+        <NotAMember /> <UserReview></UserReview>
       </section>
 
     </main>
