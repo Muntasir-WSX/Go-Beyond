@@ -108,7 +108,7 @@ const Home = () => {
   whileHover={{ scale: 1.05 }}
   whileTap={{ scale: 0.95 }}
   onClick={scrollToFeatured} 
-  className="inline-flex items-center gap-4 bg-[#ff5e37] ..."
+  className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-lg shadow-[#ff5e37]/25"
 >
   View All Packages
 </motion.button>
@@ -142,7 +142,7 @@ const Home = () => {
             </div>
             <button 
   onClick={scrollToFeatured} 
-  className="inline-flex items-center gap-4 bg-[#ff5e37] ..."
+  className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-lg shadow-[#ff5e37]/25"
 >
   Find Now
   <span className="group-hover:translate-x-1 transition-transform">→</span>
