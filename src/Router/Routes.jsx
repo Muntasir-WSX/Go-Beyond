@@ -9,6 +9,7 @@ import AddPackage from "../ADD Package/AddPackage";
 import ManagePackage from "../ManagePackage/ManagePackage";
 import MyBookings from "../MyBookings/MyBookings";
 import All_Package from "../All Packages/All_Package";
+import TourPackageDetails from "../TourPackageDetails/TourPackageDetails";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+         path: "/tourpackages/:id",
+         element: <TourPackageDetails></TourPackageDetails>,
+         loader: ({params}) => fetch(`http://localhost:3000/tourPackages/${params.id}`),
       },
       {
          path: "/packages",
