@@ -1,12 +1,12 @@
 import React from 'react';
-import AllPackagesBanner from '../All Packages/AllPackagesBanner';
+import AddPackageBanner from './AddPackageBanner';
 
 const AddPackage = () => {
     return (
         <div>
             {/* // form (my own package) + headline components go here */}
-
-          
+            {/* Add Package Banner */}
+            <AddPackageBanner />
 
         </div>
     );
