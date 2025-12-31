@@ -14,7 +14,8 @@ const AddPackageBanner = () => {
         { 
             src: cox, 
             alt: "Cox's Bazar", 
-            style: "top-[10%] left-[5%] rotate-[-6deg] z-10 w-40 h-40 lg:w-52 lg:h-52" 
+            style: "top-[10%] left-[5%] rotate-[-6deg] z-10 w-40 h-40 lg:w-52 lg:h-52" ,
+            isPriority: true
         },
         { 
             src: kaptai, 
