@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -33,7 +33,12 @@ const Home = () => {
   const tourpackagePromise = fetch('http://localhost:3000/tourPackages')
     .then(response => response.json());
 
+    // useref
+    const featuredSectionRef = useRef(null); // Ref তৈরি করুন
 
+  const scrollToFeatured = () => {
+    featuredSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
     //others
   const navigate = useNavigate();
   const slides = [
@@ -100,13 +105,13 @@ const Home = () => {
 
                     <div className="lg:hidden">
                       <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => navigate("/packages")}
-                        className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-lg shadow-[#ff5e37]/25"
-                      >
-                        View All Packages
-                      </motion.button>
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={scrollToFeatured} 
+  className="inline-flex items-center gap-4 bg-[#ff5e37] ..."
+>
+  View All Packages
+</motion.button>
                     </div>
                   </div>
                 </div>
@@ -136,12 +141,12 @@ const Home = () => {
               <p className="text-gray-800 font-bold text-lg text-left">Choose Days</p>
             </div>
             <button 
-              onClick={() => navigate("/packages")}
-              className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-lg shadow-[#ff5e37]/25"
-            >
-              Find Now
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </button>
+  onClick={scrollToFeatured} 
+  className="inline-flex items-center gap-4 bg-[#ff5e37] ..."
+>
+  Find Now
+  <span className="group-hover:translate-x-1 transition-transform">→</span>
+</button>
           </motion.div>
         </div>
       </section>
@@ -152,19 +157,18 @@ const Home = () => {
       </section>
 
       {/* 3. Package Grid Section */}
-      <section className="py-10 bg-white">
-        <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-black text-[#1a1b2e] uppercase mb-4 tracking-tight">
-                Our Featured Packages
-            </h2>
-            <div className="w-16 h-1 bg-[#ff5e37] mx-auto mb-8"></div>
-            
-            {/* Suspense যোগ করুন লোডিং দেখানোর জন্য */}
-            <React.Suspense fallback={<div className="text-xl font-bold text-[#ff5e37] animate-pulse">Loading Packages...</div>}>
-                <FeaturedPackages tourpackagePromise={tourpackagePromise} />
-            </React.Suspense>
-        </div>
-      </section>
+<section ref={featuredSectionRef} className="py-10 bg-white"> {/* এখানে ref যোগ করুন */}
+  <div className="container mx-auto px-6 text-center">
+    <h2 className="text-3xl md:text-4xl font-black text-[#1a1b2e] uppercase mb-4 tracking-tight">
+        Our Featured Packages
+    </h2>
+    <div className="w-16 h-1 bg-[#ff5e37] mx-auto mb-8"></div>
+    
+    <React.Suspense fallback={<div className="...">Loading Packages...</div>}>
+        <FeaturedPackages tourpackagePromise={tourpackagePromise} />
+    </React.Suspense>
+  </div>
+</section>
 
       {/* 4. Stats Section  */}
       <section className="pb-2 bg-white">
