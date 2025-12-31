@@ -27,10 +27,15 @@ import TourTypes from "../../Shared Components/TourTypes";
 import NotAMember from "../../Shared Components/NotAMember";
 import Partners from "../../Shared Components/Partners";
 import UserReview from "../../Shared Components/UserRivew";
+import FeaturedPackages from "./FeaturedPackages";
 
 const Home = () => {
-  const navigate = useNavigate();
+  const tourpackagePromise = fetch('http://localhost:3000/tourPackages')
+    .then(response => response.json());
 
+
+    //others
+  const navigate = useNavigate();
   const slides = [
     { img: bandarban, title: "Adventure Awaits in Bandarban", desc: "Experience the majestic hills and clouds of the Chittagong Hill Tracts." },
     { img: coxBazar, title: "Relax at Cox's Bazar", desc: "Unwind on the world's longest natural sandy sea beach." },
@@ -98,7 +103,7 @@ const Home = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => navigate("/packages")}
-                        className="bg-[#ff5e37] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest shadow-xl"
+                        className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-lg shadow-[#ff5e37]/25"
                       >
                         View All Packages
                       </motion.button>
@@ -132,7 +137,7 @@ const Home = () => {
             </div>
             <button 
               onClick={() => navigate("/packages")}
-              className="bg-[#1a1b2e] hover:bg-[#ff5e37] text-white px-10 py-5 rounded-xl font-black transition-all duration-500 uppercase flex items-center justify-center gap-3 group shadow-lg"
+              className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-lg shadow-[#ff5e37]/25"
             >
               Find Now
               <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -146,12 +151,18 @@ const Home = () => {
         <FacilityHome />
       </section>
 
-      {/* 3. Package Grid Section - Reduced Padding */}
+      {/* 3. Package Grid Section */}
       <section className="py-10 bg-white">
         <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-black text-[#1a1b2e] uppercase mb-4 tracking-tight">Our Featured Packages</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-[#1a1b2e] uppercase mb-4 tracking-tight">
+                Our Featured Packages
+            </h2>
             <div className="w-16 h-1 bg-[#ff5e37] mx-auto mb-8"></div>
-            {/* <FeaturedPackages /> */}
+            
+            {/* Suspense যোগ করুন লোডিং দেখানোর জন্য */}
+            <React.Suspense fallback={<div className="text-xl font-bold text-[#ff5e37] animate-pulse">Loading Packages...</div>}>
+                <FeaturedPackages tourpackagePromise={tourpackagePromise} />
+            </React.Suspense>
         </div>
       </section>
 

@@ -110,7 +110,7 @@ const MyBookingsBanner = () => {
                     >
                         <Link
                             to="/my-bookings-list"
-                            className="inline-flex items-center gap-4 bg-[#1a1b2e] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#ff5e37] transition-all duration-300 shadow-xl shadow-[#1a1b2e]/10"
+                            className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-lg shadow-[#ff5e37]/25"
                         >
                             My Bookings <CalendarCheck size={18} />
                         </Link>

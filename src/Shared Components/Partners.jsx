@@ -69,8 +69,8 @@ const Partners = () => {
         </motion.div>
 
         {/* Gradient Overlays for smooth fading effect */}
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#ff5e37] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#ff5e37] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-[#ff5e37] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-[#ff5e37] to-transparent z-10 pointer-events-none"></div>
       </div>
 
       {/* Decorative Background Elements */}
