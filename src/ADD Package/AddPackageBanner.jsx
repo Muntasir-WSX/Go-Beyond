@@ -50,7 +50,7 @@ const AddPackageBanner = () => {
                                     {/* Cox's Bazar (index 0) এ এখন ট্যাগটি দেওয়া হয়েছে */}
                                     {index === 0 && (
                                         <div className="absolute top-0 left-0 bg-[#ff5e37] px-4 py-1 rounded-br-xl shadow-lg">
-                                            <span className="text-white font-bold text-[10px] uppercase tracking-widest">New Spot</span>
+                                            <span className="text-white font-bold text-[10px] uppercase tracking-widest">Choose</span>
                                         </div>
                                     )}
                                 </motion.div>

@@ -44,7 +44,7 @@ const FeaturedPackageCard = ({ pckg }) => {
 
         <button 
           onClick={() => navigate(`/tourpackages/${_id}`)}
-          className="w-full mt-6 py-3 bg-[#f8f7f0] text-[#1a1b2e] font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-[#ff5e37] hover:text-white transition-all duration-300"
+          className="w-full mt-6 py-3 bg-[#ff5e37] text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-black hover:text-white transition-all duration-300"
         >
           View Details <ArrowRight size={16} />
         </button>

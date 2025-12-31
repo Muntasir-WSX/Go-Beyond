@@ -48,7 +48,7 @@ const MyBookingsBanner = () => {
                                     {/* Badge on 4th Image */}
                                     {index === 2 && (
                                         <div className="absolute top-0 left-0 bg-[#ff5e37] px-4 py-1 rounded-br-xl shadow-lg">
-                                            <span className="text-white font-bold text-[10px] uppercase tracking-widest">Your spot</span>
+                                            <span className="text-white font-bold text-[10px] uppercase tracking-widest">spot</span>
                                         </div>
                                     )}
                                 </motion.div>
