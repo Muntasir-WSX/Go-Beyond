@@ -11,7 +11,7 @@ import saintmartin from "../assets/signInMain.jpg";
 
 const AllPackagesBanner = () => {
     return (
-        <section className="bg-[#f8f7f0] py-16 lg:py-24 overflow-hidden border-b border-gray-200">
+        <section className="bg-white py-16 lg:py-24 overflow-hidden border-b border-gray-200">
             <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20">
                 
                 {/* 📸 Right Side: Image Grid with GetToKnowUs Style */}
