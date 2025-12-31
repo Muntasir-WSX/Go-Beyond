@@ -16,7 +16,7 @@ const FacilityHome = () => {
                             Best Price Guarantee
                         </h3>
                         <p className="text-gray-500 text-sm max-w-50 leading-relaxed">
-                            There are many variations of but the majority have simply free text.
+                            Enjoy premium travel experiences at the most competitive rates in the market.
                         </p>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ const FacilityHome = () => {
                             Easy & Quick Booking
                         </h3>
                         <p className="text-gray-500 text-sm max-w-50 leading-relaxed">
-                            There are many variations of but the majority have simply free text.
+                            Secure your dream destination in just a few clicks with our seamless booking process.
                         </p>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ const FacilityHome = () => {
                             Best Tour Selection
                         </h3>
                         <p className="text-gray-500 text-sm max-w-50 leading-relaxed">
-                            There are many variations of but the majority have simply free text.
+                            Explore a handpicked collection of unique journeys tailored to your adventure style.
                         </p>
                     </div>
                 </div>
