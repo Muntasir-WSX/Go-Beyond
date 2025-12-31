@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom"; // NavLink ইম্পোর্ট করা হয়েছে
 import {
   Menu,
   User,
@@ -15,11 +15,10 @@ import {
   BookmarkCheck,
   LogOut,
 } from "lucide-react";
-import { AuthContext } from "../Context/AuthProvider"; // আপনার পাথ অনুযায়ী ঠিক করে নিন
+import { AuthContext } from "../Context/AuthProvider";
 
 const Nav = () => {
   const [isUserOpen, setIsUserOpen] = useState(false);
-  // Context থেকে ইউজার এবং লগআউট ফাংশন আনা হলো
   const { user, logOut } = useContext(AuthContext);
 
   const navLinks = [
@@ -35,6 +34,12 @@ const Nav = () => {
       })
       .catch((error) => console.error(error));
   };
+
+  // একটি কমন ফাংশন অ্যাক্টিভ ক্লাসের জন্য
+  const getActiveLinkClass = ({ isActive }) =>
+    isActive 
+      ? "text-[#ff5e37] transition-colors" 
+      : "hover:text-[#ff5e37] transition-colors text-white";
 
   return (
     <div className="drawer z-100">
@@ -59,23 +64,26 @@ const Nav = () => {
             </h1>
           </Link>
 
-          {/* Navigation Links - Desktop */}
+          {/* Navigation Links - Desktop (Active Logic Added) */}
           <div className="hidden lg:flex items-center gap-10 font-bold uppercase text-[12px] tracking-widest">
             {navLinks.map((link) => (
-              <Link key={link.name} to={link.path} className="hover:text-[#ff5e37] transition-colors">
+              <NavLink 
+                key={link.name} 
+                to={link.path} 
+                className={getActiveLinkClass}
+              >
                 {link.name}
-              </Link>
+              </NavLink>
             ))}
           </div>
 
-          {/* Actions & User Dropdown */}
+          {/* User Profile Section */}
           <div className="flex items-center gap-4">
             <div className="relative">
               <button
                 onClick={() => setIsUserOpen(!isUserOpen)}
                 className="w-10 h-10 rounded-full overflow-hidden hover:ring-2 hover:ring-[#ff5e37] transition-all border border-gray-600 flex items-center justify-center bg-gray-800"
               >
-                {/* ইউজার লগইন থাকলে তার ছবি, না থাকলে আইকন */}
                 {user && user.photoURL ? (
                   <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
                 ) : (
@@ -89,7 +97,6 @@ const Nav = () => {
                   <div className="absolute right-0 mt-3 w-56 bg-white text-gray-800 rounded-xl shadow-2xl py-3 border border-gray-100 z-20 animate-in fade-in slide-in-from-top-2 duration-200">
                     
                     {user ? (
-                      /* --- LOGGED IN USER VIEW --- */
                       <div className="space-y-1">
                         <div className="px-4 py-2 border-b border-gray-100 mb-2">
                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Signed in as</p>
@@ -119,7 +126,6 @@ const Nav = () => {
                         </div>
                       </div>
                     ) : (
-                      /* --- GUEST VIEW --- */
                       <div className="space-y-1">
                         <Link to="/signin" onClick={() => setIsUserOpen(false)} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
                           <LogIn size={16} className="text-[#ff5e37]" />
@@ -139,7 +145,7 @@ const Nav = () => {
         </nav>
       </div>
 
-      {/* Drawer Sidebar - এখানেও চাইলে লজিক দিতে পারেন */}
+      {/* Drawer Sidebar (Active Logic for Mobile) */}
       <div className="drawer-side">
         <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
         <ul className="menu p-6 w-80 min-h-full bg-[#1a1b2e] text-white">
@@ -156,10 +162,23 @@ const Nav = () => {
           <div className="space-y-2">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <Link to={link.path} className="flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-[#ff5e37] transition-all text-lg font-medium group">
-                  <span className="text-[#ff5e37] group-hover:text-white">{link.icon}</span>
-                  {link.name}
-                </Link>
+                <NavLink 
+                  to={link.path} 
+                  className={({ isActive }) => 
+                    `flex items-center gap-4 py-4 px-4 rounded-xl transition-all text-lg font-medium group ${
+                      isActive ? "bg-[#ff5e37] text-white" : "hover:bg-gray-800"
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span className={`${isActive ? "text-white" : "text-[#ff5e37]"} group-hover:text-white`}>
+                        {link.icon}
+                      </span>
+                      {link.name}
+                    </>
+                  )}
+                </NavLink>
               </li>
             ))}
           </div>

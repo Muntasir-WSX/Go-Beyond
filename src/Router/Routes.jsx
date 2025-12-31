@@ -5,6 +5,10 @@ import ErrorPage from "../Shared Components/ErrorPage";
 import AboutUs from "../PAGES/ABoutUs/ABoutUs";
 import SignIn from "../PAGES/AuthPages/SignIn";
 import Register from "../PAGES/AuthPages/Register";
+import AddPackage from "../ADD Package/AddPackage";
+import ManagePackage from "../ManagePackage/ManagePackage";
+import MyBookings from "../MyBookings/MyBookings";
+import All_Package from "../All Packages/All_Package";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +21,28 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
+         path: "/packages",
+         element: <All_Package></All_Package>,
+      },
+      {
         path: "/about-us",
         element: <AboutUs></AboutUs>,
       },
       
       // Auth Routs
+
+      {
+          path: "/add-package",
+          element: <AddPackage></AddPackage>,
+      },
+      {
+          path: "/manage-packages",
+          element: <ManagePackage></ManagePackage>,
+      },
+      {
+          path: "/my-bookings",
+          element: <MyBookings></MyBookings>,
+      },
 
       {
           path: "/signin",
