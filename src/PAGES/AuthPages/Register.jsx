@@ -165,7 +165,7 @@ const Register = () => {
             {/* --- RIGHT SIDE: IMAGE SECTION --- */}
             <div className="hidden lg:flex lg:w-1/2 h-full relative order-1 lg:order-2">
                 <img src={registerImg} alt="Register" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-bl from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
+                <div className="absolute inset-0 bg-linear-to-bl from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
                 
                 <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between items-end text-right">
                     <Link to="/" className="flex items-center group w-fit">

@@ -69,7 +69,7 @@ const SignIn = () => {
             {/* --- LEFT SIDE: IMAGE SECTION --- */}
             <div className="hidden lg:flex lg:w-1/2 h-full relative">
                 <img src={SignInPhoto} alt="Sign In" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
                 
                 <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
                     <Link to="/" className="flex items-center group w-fit">

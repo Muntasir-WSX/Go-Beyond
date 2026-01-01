@@ -1,147 +1,164 @@
 import React from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, Link } from 'react-router'; 
 import { 
   Calendar, Clock, MapPin, Tag, Mail, 
   Phone, ShieldCheck, CheckCircle2, Navigation, 
-  Star, Heart, Share2, Info, Eye
+  Star, Heart, Share2, Eye, Info, Map 
 } from 'lucide-react';
 import TourPackageDetailsBanner from './TourPackageDetailsBanner';
 
 const TourPackageDetails = () => {
     const data = useLoaderData();
     const {
-        _id,
-        tour_name,
-        image,
-        duration,
-        departure_location,
-        destination,
-        price,
-        departure_date,
-        package_details,
+        _id, 
+        tour_name, 
+        image, 
+        duration, 
+        departure_location, 
+        destination, // এটি ব্যবহার করা হয়েছে
+        price, 
+        departure_date, 
+        package_details, 
         guide_name,
-        guide_email,
-        guide_photo,
-        guide_contact_no,
-        bookingCount,
+        guide_email, 
+        guide_photo, 
+        guide_contact_no, 
+        bookingCount, 
         created_at
     } = data;
 
     return (
-        <div className="bg-[#f8f9fa] min-h-screen pb-20 font-sans text-[#1a1b2e]">
-            {/* Banner Section */}
+        <div className="bg-[#fcfcfc] min-h-screen pb-20 font-sans text-[#1a1b2e]">
+            {/* ১. ব্যানার সেকশন */}
             <TourPackageDetailsBanner />
 
-            <div className="max-w-7xl mx-auto px-6 mt-16relative z-20">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="max-w-7xl mx-auto px-6 py-12 relative z-30">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
                     
-                    {/* 2. Main Content */}
-                    <div className="lg:col-span-2 space-y-6">
+                    {/* বাম পাশের মেইন কন্টেন্ট */}
+                    <div className="lg:col-span-2 space-y-10">
                         
-                        {/* Main Image Display Card */}
-                        <div className="bg-white p-4 rounded-4xl shadow-sm border border-gray-100">
-                            <div className="relative h-100 w-full overflow-hidden rounded-3xl">
+                        {/* ইমেজ এবং ডেসটিনেশন ট্যাগ */}
+                        <div className="bg-white p-3 rounded-[2.5rem] shadow-xl border border-gray-100">
+                            <div className="relative h-[500px] w-full overflow-hidden rounded-[2rem]">
                                 <img 
                                     src={image} 
                                     alt={tour_name} 
-                                    className="w-full h-full object-cover shadow-inner"
+                                    className="w-full h-full object-cover"
                                 />
-                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2 shadow-sm">
-                                    <Eye size={16} className="text-[#ff5e37]" />
-                                    <span className="text-xs font-bold uppercase tracking-widest">{bookingCount} People Viewing</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Tour Title Section */}
-                        <div className="bg-white p-8 lg:p-10 rounded-4xl border border-gray-100 shadow-sm">
-                            <div className="flex justify-between items-start mb-6">
-                                <div>
-                                    <h2 className="text-4xl font-black uppercase tracking-tight mb-2 italic">
-                                        {tour_name}
-                                    </h2>
-                                    <div className="flex items-center gap-4 text-gray-400">
-                                        <div className="flex items-center gap-1">
-                                            <MapPin size={16} className="text-[#ff5e37]" />
-                                            <span className="text-sm font-bold uppercase">{destination}</span>
-                                        </div>
-                                        <span className="text-gray-200">|</span>
-                                        <div className="flex items-center gap-1">
-                                            <Star size={16} className="text-amber-400 fill-amber-400" />
-                                            <span className="text-sm font-bold uppercase">4.9 (Top Rated)</span>
-                                        </div>
+                                {/* ডায়নামিক ডেসটিনেশন ব্যাজ */}
+                                <div className="absolute top-6 left-6 flex flex-col gap-3">
+                                    <div className="bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-2xl flex items-center gap-2 shadow-xl border border-white">
+                                        <MapPin size={18} className="text-[#ff5e37]" />
+                                        <span className="text-xs font-black uppercase tracking-widest">{destination}</span>
+                                    </div>
+                                    <div className="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-2xl flex items-center gap-2 shadow-xl border border-white/20 text-white">
+                                        <Eye size={18} className="text-white" />
+                                        <span className="text-xs font-black uppercase tracking-widest">{bookingCount} Exploring Now</span>
                                     </div>
                                 </div>
-                                <div className="flex gap-2">
-                                    <button className="p-3 border border-gray-100 rounded-2xl hover:bg-gray-50"><Heart size={20}/></button>
-                                    <button className="p-3 border border-gray-100 rounded-2xl hover:bg-gray-50"><Share2 size={20}/></button>
+                            </div>
+                        </div>
+
+                        {/* মেইন ইনফো কার্ড */}
+                        <div className="bg-white p-10 lg:p-14 rounded-[3rem] border border-gray-100 shadow-sm">
+                            <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <span className="bg-[#ff5e37]/10 text-[#ff5e37] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Package ID: {_id.slice(-6)}</span>
+                                        <div className="flex text-amber-400">
+                                            {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+                                        </div>
+                                    </div>
+                                    <h2 className="text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-tight italic">
+                                        {tour_name}
+                                    </h2>
+                                    {/* গন্তব্য এবং যাত্রা শুরুর স্থান */}
+                                    <div className="flex items-center gap-4 text-gray-400 font-bold text-sm uppercase tracking-wider">
+                                        <span className="flex items-center gap-1"><Navigation size={14}/> {departure_location}</span>
+                                        <span>➔</span>
+                                        <span className="flex items-center gap-1 text-[#ff5e37]"><Map size={14}/> {destination}</span>
+                                    </div>
+                                </div>
+                                <div className="flex gap-3">
+                                    <button className="p-4 bg-gray-50 rounded-2xl hover:bg-rose-50 hover:text-rose-500 transition-all border border-gray-100"><Heart size={22} /></button>
+                                    <button className="p-4 bg-gray-50 rounded-2xl hover:bg-blue-50 hover:text-blue-500 transition-all border border-gray-100"><Share2 size={22} /></button>
                                 </div>
                             </div>
 
-                            <p className="text-gray-600 text-lg leading-relaxed border-t border-gray-50 pt-6">
+                            <div className="text-gray-600 leading-relaxed font-medium text-lg border-t border-gray-50 pt-8">
+                                <h3 className="text-[#1a1b2e] font-black uppercase text-xs tracking-[0.2em] mb-4">About This Journey</h3>
                                 {package_details}
-                            </p>
+                            </div>
                         </div>
 
-                        {/* Information Grid */}
+                        {/* হাইলাইট গ্রিড (সবগুলো প্রপার্টি এখানে আছে) */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <HighlightCard label="Starting From" value={departure_location} icon={<Navigation size={18}/>} />
-                            <HighlightCard label="Journey Date" value={departure_date} icon={<Calendar size={18}/>} />
-                            <HighlightCard label="Tour Duration" value={duration} icon={<Clock size={18}/>} />
-                            <HighlightCard label="Package Type" value="Luxury" icon={<Tag size={18}/>} />
+                            <HighlightCard label="Departure" value={departure_location} icon={<Navigation size={20}/>} />
+                            <HighlightCard label="Target Destination" value={destination} icon={<Map size={20}/>} />
+                            <HighlightCard label="Tour Start" value={departure_date} icon={<Calendar size={20}/>} />
+                            <HighlightCard label="Duration" value={duration} icon={<Clock size={20}/>} />
                         </div>
 
-                        {/* Guide Section  */}
-                        <div className="bg-[#1a1b2e] p-8 lg:p-10 rounded-[2.5rem] text-white flex flex-col md:flex-row items-center gap-8">
+                        {/* গাইড প্রোফাইল */}
+                        <div className="bg-[#1a1b2e] p-10 rounded-[3rem] text-white flex flex-col md:flex-row items-center gap-10 shadow-2xl relative">
                             <img 
                                 src={guide_photo} 
                                 alt={guide_name} 
-                                className="w-32 h-32 rounded-3xl object-cover border-4 border-white/5"
+                                className="w-36 h-36 rounded-[2rem] object-cover border-4 border-white/10"
                             />
-                            <div className="flex-1 space-y-4">
+                            <div className="flex-1 space-y-6 text-center md:text-left">
                                 <div>
-                                    <p className="text-[#ff5e37] text-[10px] font-black uppercase tracking-[0.3em] mb-1">Your Professional Guide</p>
-                                    <h4 className="text-3xl font-black uppercase tracking-tight">{guide_name}</h4>
+                                    <p className="text-[#ff5e37] text-[10px] font-black uppercase tracking-[0.3em] mb-2">Expert Guide Details</p>
+                                    <h4 className="text-4xl font-black uppercase tracking-tighter italic">{guide_name}</h4>
                                 </div>
-                                <div className="flex flex-wrap gap-4 pt-2">
-                                    <div className="flex items-center gap-2 text-gray-400 bg-white/5 px-4 py-2 rounded-xl text-sm border border-white/5">
-                                        <Mail size={14} className="text-[#ff5e37]" /> {guide_email}
+                                <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                                    <div className="bg-white/5 px-5 py-3 rounded-xl text-[11px] font-bold tracking-wider flex items-center gap-3 border border-white/5">
+                                        <Mail size={16} className="text-[#ff5e37]" /> {guide_email}
                                     </div>
-                                    <div className="flex items-center gap-2 text-gray-400 bg-white/5 px-4 py-2 rounded-xl text-sm border border-white/5">
-                                        <Phone size={14} className="text-[#ff5e37]" /> {guide_contact_no}
+                                    <div className="bg-white/5 px-5 py-3 rounded-xl text-[11px] font-bold tracking-wider flex items-center gap-3 border border-white/5">
+                                        <Phone size={16} className="text-[#ff5e37]" /> {guide_contact_no}
                                     </div>
                                 </div>
                             </div>
-                            <ShieldCheck size={48} className="text-[#ff5e37] opacity-20 hidden lg:block" />
                         </div>
                     </div>
 
-                    {/* 3. Right Side Static Booking Card */}
-                    <div className="lg:col-span-1">
-                        <div className="sticky top-28 bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-xl shadow-gray-200/50">
-                            <p className="text-center text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Total Package Price</p>
-                            <div className="text-center mb-8">
-                                <span className="text-6xl font-black text-[#1a1b2e] tracking-tighter">${price}</span>
-                                <span className="text-sm font-bold text-gray-400 ml-1 italic">/ person</span>
+                    {/* ডান পাশের স্টিকি বুকিং কার্ড */}
+                    <div className="lg:col-span-1 h-full">
+                        <div className="sticky top-24 space-y-6">
+                            <div className="bg-white p-10 lg:p-12 rounded-[3.5rem] shadow-2xl shadow-gray-200/40 border border-gray-100 text-center">
+                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] block mb-6">Price Per Expedition</span>
+                                <div className="mb-10">
+                                    <span className="text-7xl font-black text-[#1a1b2e] tracking-tighter">${price}</span>
+                                    <span className="text-sm font-bold text-gray-400 ml-1 uppercase">/ Person</span>
+                                </div>
+
+                                <Link to={`/book-package/${_id}`}>
+                                    <button className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-black py-6 rounded-[2rem] transition-all duration-500 uppercase tracking-widest text-xs shadow-xl active:scale-95">
+                                        Confirm Your Spot
+                                    </button>
+                                </Link>
+                                
+                                <div className="mt-8 pt-8 border-t border-gray-50 space-y-4">
+                                    <BenefitItem text="Professional Guide" />
+                                    <BenefitItem text="Luxury Accommodation" />
+                                    <BenefitItem text="Daily Gourmet Meals" />
+                                    <BenefitItem text="All Transport Costs" />
+                                </div>
+
+                                <p className="mt-8 text-[9px] text-gray-300 font-bold uppercase tracking-widest leading-tight">
+                                    Package Created: {new Date(created_at).toLocaleDateString()}
+                                </p>
                             </div>
-
-                            <div className="space-y-4 mb-10 border-t border-b border-gray-50 py-8">
-                                <BenefitItem text="Premium Transportation" />
-                                <BenefitItem text="Daily Breakfast & Dinner" />
-                                <BenefitItem text="All Sightseeing Tickets" />
-                                <BenefitItem text="24/7 Dedicated Support" />
+                            
+                            <div className="bg-[#ff5e37] p-6 rounded-[2rem] text-white flex items-center justify-between shadow-lg">
+                                <div className="flex items-center gap-4">
+                                    <ShieldCheck size={24} />
+                                    <span className="text-[10px] font-black uppercase tracking-widest">Travel Insurance <br/> Fully Covered</span>
+                                </div>
+                                <Info size={18} className="opacity-50" />
                             </div>
-
-                            <Link to={`/book-package/${_id}`}>
-                                <button className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm shadow-lg shadow-orange-100">
-                                    Confirm Your Spot
-                                </button>
-                            </Link>
-
-                            <p className="mt-6 text-[10px] text-center text-gray-300 font-bold uppercase tracking-widest leading-tight">
-                                Secured by SSL Encryption <br/>
-                                <span className="text-gray-400">Added on: {new Date(created_at).toLocaleDateString()}</span>
-                            </p>
                         </div>
                     </div>
 
@@ -152,16 +169,16 @@ const TourPackageDetails = () => {
 };
 
 const HighlightCard = ({ label, value, icon }) => (
-    <div className="bg-white p-5 rounded-2xl border border-gray-100 text-center space-y-1 shadow-sm">
+    <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm text-center space-y-2 hover:border-[#ff5e37]/30 transition-all duration-300">
         <div className="text-[#ff5e37] flex justify-center mb-1">{icon}</div>
-        <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest">{label}</p>
-        <p className="text-[#1a1b2e] font-bold text-xs uppercase tracking-tight">{value}</p>
+        <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest leading-none">{label}</p>
+        <p className="text-[#1a1b2e] font-bold text-xs uppercase tracking-tight line-clamp-1">{value}</p>
     </div>
 );
 
 const BenefitItem = ({ text }) => (
-    <div className="flex items-center gap-3 text-[11px] font-black text-gray-500 uppercase tracking-tight px-2">
-        <CheckCircle2 size={14} className="text-emerald-500" />
+    <div className="flex items-center gap-3 text-[10px] font-black text-gray-500 uppercase tracking-tight px-2">
+        <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
         <span>{text}</span>
     </div>
 );
