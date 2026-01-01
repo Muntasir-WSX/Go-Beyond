@@ -10,6 +10,7 @@ import TourPackageDetailsBanner from './TourPackageDetailsBanner';
 const TourPackageDetails = () => {
     const data = useLoaderData();
     const {
+        _id,
         tour_name,
         image,
         duration,
@@ -131,9 +132,11 @@ const TourPackageDetails = () => {
                                 <BenefitItem text="24/7 Dedicated Support" />
                             </div>
 
-                            <button className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm shadow-lg shadow-orange-100">
-                                Confirm Your Spot
-                            </button>
+                            <Link to={`/book-package/${_id}`}>
+                                <button className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm shadow-lg shadow-orange-100">
+                                    Confirm Your Spot
+                                </button>
+                            </Link>
 
                             <p className="mt-6 text-[10px] text-center text-gray-300 font-bold uppercase tracking-widest leading-tight">
                                 Secured by SSL Encryption <br/>

@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Anchor, Mail, Lock, User, UserPlus, ArrowLeft, Image as ImageIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import registerImg from "../../assets/login.jpg";
 import { FcGoogle } from 'react-icons/fc';
-
 import { updateProfile } from 'firebase/auth';
-// Toastify ইম্পোর্ট
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../../Context/AuthProvider';
@@ -14,25 +12,28 @@ import { AuthContext } from '../../Context/AuthProvider';
 const Register = () => {
     const { creatUser, setLoading, googleSignIn } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
 
+    // আগের ডেস্টিনেশন ট্র্যাক করা (SignIn থেকে পাস করা state অথবা সরাসরি হোম)
+    const from = location.state?.from?.pathname || "/";
 
     const handleGoogleRegister = () => {
         googleSignIn()
             .then(result => {
-                toast.success(' Registered with Google Successfully!', {
+                toast.success('Registered with Google Successfully!', {
                     position: "top-center",
-                    autoClose: 1500,
+                    autoClose: 1000,
                     theme: "dark",
                     transition: Bounce,
                 });
                 
                 setTimeout(() => {
-                    navigate("/");
-                }, 1500);
+                    navigate(from, { replace: true });
+                }, 1000);
             })
             .catch(error => {
                 setLoading(false);
-                toast.error(` ${error.message}`, {
+                toast.error(`${error.message}`, {
                     theme: "dark",
                 });
             });
@@ -46,42 +47,38 @@ const Register = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        // পাসওয়ার্ড ভ্যালিডেশন
+        // পাসওয়ার্ড ভ্যালিডেশন (Security Gap Fix)
         if (password.length < 6) {
-            toast.error('Password must be at least 6 characters!', {
-                position: "top-center",
-                autoClose: 2000,
-                theme: "dark",
-                transition: Bounce,
-            });
+            toast.error('Password must be at least 6 characters!');
             return;
         }
 
-        // ১. ইউজার তৈরি করা
         creatUser(email, password)
             .then(result => {
                 const user = result.user;
                 
-                // ২. প্রোফাইল আপডেট (নাম ও ছবি)
+                // প্রোফাইল আপডেট
                 updateProfile(user, {
                     displayName: name,
                     photoURL: photo
                 })
                 .then(() => {
-                    // সফলতার টোস্ট
                     toast.success('Registration Successful!', {
                         position: "top-center",
-                        autoClose: 1500,
+                        autoClose: 1000,
                         theme: "dark",
-                        transition: Bounce,
                     });
 
                     setTimeout(() => {
                         form.reset();
-                        navigate("/");
-                    }, 2000); // ২ সেকেন্ড পর রিডাইরেক্ট যাতে টোস্ট দেখা যায়
+                        // ইউজার যেখানে যেতে চেয়েছিল সেখানে পাঠিয়ে দেওয়া
+                        navigate(from, { replace: true });
+                    }, 1000);
                 })
-                .catch(err => toast.error(err.message));
+                .catch(err => {
+                    setLoading(false);
+                    toast.error(err.message);
+                });
             })
             .catch(error => {
                 setLoading(false);
@@ -94,14 +91,13 @@ const Register = () => {
 
     return (
         <div className="h-screen w-full flex flex-col lg:flex-row bg-white overflow-hidden">
-            {/* Toast Container এখানে রাখা হয়েছে যাতে মেসেজ দেখা যায় */}
             <ToastContainer />
             
             {/* --- LEFT SIDE: FORM SECTION --- */}
             <div className="w-full lg:w-1/2 h-full flex items-center justify-center p-6 md:p-10 bg-white order-2 lg:order-1 overflow-y-auto lg:overflow-hidden">
                 <div className="w-full max-w-md mx-auto py-8 lg:py-0">
                     <div className="mb-5">
-                        <Link to="/signin" className="inline-flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-[#ff5e37] mb-3 transition-colors">
+                        <Link to="/signin" state={{ from: location.state?.from }} className="inline-flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-[#ff5e37] mb-3 transition-colors">
                             <ArrowLeft size={12} /> Back to Login
                         </Link>
                         <h3 className="text-3xl font-black text-[#1a1b2e] uppercase tracking-tighter mb-2">Register</h3>
@@ -109,6 +105,7 @@ const Register = () => {
                     </div>
 
                     <form onSubmit={handleRegister} className="space-y-3">
+                        {/* Name Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Full Name</label>
                             <div className="relative">
@@ -117,6 +114,7 @@ const Register = () => {
                             </div>
                         </div>
 
+                        {/* Photo Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Photo URL</label>
                             <div className="relative">
@@ -125,6 +123,7 @@ const Register = () => {
                             </div>
                         </div>
 
+                        {/* Email Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</label>
                             <div className="relative">
@@ -133,18 +132,16 @@ const Register = () => {
                             </div>
                         </div>
 
+                        {/* Password Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Password</label>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                 <input required name="password" type="password" placeholder="••••••••" className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 pl-11 pr-4 focus:border-[#ff5e37] outline-none font-semibold text-[#1a1b2e] transition-all text-sm" />
                             </div>
-                            <p className="text-[9px] text-gray-400 font-medium leading-tight pt-1">
-                                * Min 6 chars, include uppercase & lowercase letters.
-                            </p>
                         </div>
 
-                        <button  type="submit" className="w-full bg-[#1a1b2e] hover:bg-[#ff5e37] text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 uppercase text-xs tracking-widest shadow-lg mt-2 active:scale-95">
+                        <button type="submit" className="w-full bg-[#1a1b2e] hover:bg-[#ff5e37] text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 uppercase text-xs tracking-widest shadow-lg mt-2 active:scale-95">
                             Create Account <UserPlus size={16} />
                         </button>
                     </form>
@@ -160,7 +157,7 @@ const Register = () => {
                     </button>
 
                     <p className="mt-5 text-center text-xs font-medium text-gray-500">
-                        Joined already? <Link to="/signin" className="text-[#ff5e37] font-bold hover:underline">Sign In Here</Link>
+                        Joined already? <Link to="/signin" state={{ from: location.state?.from }} className="text-[#ff5e37] font-bold hover:underline">Sign In Here</Link>
                     </p>
                 </div>
             </div>
@@ -168,7 +165,7 @@ const Register = () => {
             {/* --- RIGHT SIDE: IMAGE SECTION --- */}
             <div className="hidden lg:flex lg:w-1/2 h-full relative order-1 lg:order-2">
                 <img src={registerImg} alt="Register" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-linear-to-bl from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
+                <div className="absolute inset-0 bg-gradient-to-bl from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
                 
                 <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between items-end text-right">
                     <Link to="/" className="flex items-center group w-fit">
@@ -179,7 +176,7 @@ const Register = () => {
                         <h2 className="text-5xl font-black text-white leading-tight uppercase tracking-tighter">Explore <br /> <span className="text-[#ff5e37]">New Horizons</span></h2>
                         <p className="text-lg text-gray-200 font-medium max-w-sm ml-auto">Unlock exclusive travel deals with your new account.</p>
                     </div>
-                    <div className="text-gray-400 text-[10px] font-black uppercase tracking-widest">© 2025 GoBeyond Travel</div>
+                    <div className="text-gray-400 text-[10px] font-black uppercase tracking-widest">© 2026 GoBeyond Travel</div>
                 </div>
             </div>
         </div>

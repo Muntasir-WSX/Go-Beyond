@@ -1,29 +1,31 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Anchor, Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SignInPhoto from "../../assets/signInMain.jpg";
 import { FcGoogle } from 'react-icons/fc';
-
-// Toastify ইম্পোর্ট
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const SignIn = () => {
     const { logIn, setLoading, googleSignIn } = useContext(AuthContext);
+    const location = useLocation();
     const navigate = useNavigate();
 
-    // গুগল সাইন ইন হ্যান্ডলার
+    // প্রাইভেট রুট থেকে আসলে সেই লোকেশন ধরবে, নাহলে হোম পেজ
+    const from = location.state?.from?.pathname || "/";
+
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
                 toast.success(`Welcome, ${result.user.displayName}!`, {
                     position: "top-center",
-                    autoClose: 1500,
+                    autoClose: 1000,
                     theme: "dark",
                 });
-                setTimeout(() => navigate("/"), 1500);
+                // সফল হলে নির্দিষ্ট লোকেশনে রিডাইরেক্ট
+                setTimeout(() => navigate(from, { replace: true }), 1000);
             })
             .catch(error => {
                 setLoading(false);
@@ -33,53 +35,41 @@ const SignIn = () => {
 
     const handleSignIn = e => {
         e.preventDefault();
-        
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
 
-        // Firebase Login Logic
         logIn(email, password)
             .then(result => {
-                const user = result.user;
-                
-                // ১. সফলতার টোস্ট
-                toast.success(`Welcome back, ${user.displayName || 'Explorer'}!`, {
+                toast.success(`Welcome back, ${result.user.displayName || 'Explorer'}!`, {
                     position: "top-center",
-                    autoClose: 1500,
+                    autoClose: 1000,
                     theme: "dark",
                     transition: Bounce,
                 });
 
-                // ২. অল্প সময় অপেক্ষা করে রিডাইরেক্ট (যাতে টোস্ট দেখা যায়)
                 setTimeout(() => {
                     form.reset();
-                    navigate("/");
-                }, 1500);
+                    navigate(from, { replace: true });
+                }, 1000);
             })
             .catch(error => {
-                console.error("Login Error:", error.message);
                 setLoading(false);
-                
-                // ৩. ব্যর্থতার টোস্ট
                 toast.error("Invalid email or password!", {
                     position: "top-center",
-                    autoClose: 2000,
                     theme: "dark",
-                    transition: Bounce,
                 });
             });
     };
 
     return (
         <div className="h-screen w-full flex flex-col lg:flex-row bg-white overflow-hidden">
-            {/* ToastContainer অবশ্যই এখানে থাকতে হবে */}
             <ToastContainer />
             
             {/* --- LEFT SIDE: IMAGE SECTION --- */}
             <div className="hidden lg:flex lg:w-1/2 h-full relative">
                 <img src={SignInPhoto} alt="Sign In" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-linear-to-br from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#ff5e37]/90 via-[#1a1b2e]/70 to-[#1a1b2e]/95"></div>
                 
                 <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
                     <Link to="/" className="flex items-center group w-fit">
@@ -93,7 +83,7 @@ const SignIn = () => {
                         </motion.h2>
                         <p className="text-lg text-gray-200 font-medium max-w-sm">Log in to manage your trips and explore packages.</p>
                     </div>
-                    <div className="text-gray-400 text-[10px] font-black uppercase tracking-widest">© 2025 GoBeyond Travel</div>
+                    <div className="text-gray-400 text-[10px] font-black uppercase tracking-widest">© 2026 GoBeyond Travel</div>
                 </div>
             </div>
 
@@ -138,7 +128,7 @@ const SignIn = () => {
                     </button>
 
                     <p className="mt-8 text-center text-sm font-medium text-gray-500">
-                        New explorer? <Link to="/register" className="text-[#ff5e37] font-bold hover:underline">Create Account</Link>
+                        New explorer? <Link to="/register" state={{ from: location.state?.from }} className="text-[#ff5e37] font-bold hover:underline">Create Account</Link>
                     </p>
                 </div>
             </div>
