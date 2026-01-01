@@ -15,7 +15,7 @@ const TourPackageDetails = () => {
         image, 
         duration, 
         departure_location, 
-        destination, // এটি ব্যবহার করা হয়েছে
+        destination,
         price, 
         departure_date, 
         package_details, 
@@ -29,24 +29,24 @@ const TourPackageDetails = () => {
 
     return (
         <div className="bg-[#fcfcfc] min-h-screen pb-20 font-sans text-[#1a1b2e]">
-            {/* ১. ব্যানার সেকশন */}
+            {/* Banner Section */}
             <TourPackageDetailsBanner />
 
             <div className="max-w-7xl mx-auto px-6 py-12 relative z-30">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
                     
-                    {/* বাম পাশের মেইন কন্টেন্ট */}
+                    {/* Left Side Content */}
                     <div className="lg:col-span-2 space-y-10">
                         
-                        {/* ইমেজ এবং ডেসটিনেশন ট্যাগ */}
+                        {/* Banner Image */}
                         <div className="bg-white p-3 rounded-[2.5rem] shadow-xl border border-gray-100">
-                            <div className="relative h-[500px] w-full overflow-hidden rounded-[2rem]">
+                            <div className="relative h-125 w-full overflow-hidden rounded-4xl">
                                 <img 
                                     src={image} 
                                     alt={tour_name} 
                                     className="w-full h-full object-cover"
                                 />
-                                {/* ডায়নামিক ডেসটিনেশন ব্যাজ */}
+                                {/* Dynamic Destination Badge */}
                                 <div className="absolute top-6 left-6 flex flex-col gap-3">
                                     <div className="bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-2xl flex items-center gap-2 shadow-xl border border-white">
                                         <MapPin size={18} className="text-[#ff5e37]" />
@@ -60,7 +60,7 @@ const TourPackageDetails = () => {
                             </div>
                         </div>
 
-                        {/* মেইন ইনফো কার্ড */}
+                        {/* Information Card */}
                         <div className="bg-white p-10 lg:p-14 rounded-[3rem] border border-gray-100 shadow-sm">
                             <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
                                 <div className="space-y-4">
@@ -73,7 +73,7 @@ const TourPackageDetails = () => {
                                     <h2 className="text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-tight italic">
                                         {tour_name}
                                     </h2>
-                                    {/* গন্তব্য এবং যাত্রা শুরুর স্থান */}
+                                    {/* Destination and departure location */}
                                     <div className="flex items-center gap-4 text-gray-400 font-bold text-sm uppercase tracking-wider">
                                         <span className="flex items-center gap-1"><Navigation size={14}/> {departure_location}</span>
                                         <span>➔</span>
@@ -92,7 +92,7 @@ const TourPackageDetails = () => {
                             </div>
                         </div>
 
-                        {/* হাইলাইট গ্রিড (সবগুলো প্রপার্টি এখানে আছে) */}
+                        {/* Highlight Grid (All Properties Here) */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <HighlightCard label="Departure" value={departure_location} icon={<Navigation size={20}/>} />
                             <HighlightCard label="Target Destination" value={destination} icon={<Map size={20}/>} />
@@ -100,12 +100,12 @@ const TourPackageDetails = () => {
                             <HighlightCard label="Duration" value={duration} icon={<Clock size={20}/>} />
                         </div>
 
-                        {/* গাইড প্রোফাইল */}
+                        {/* Guide Profile */}
                         <div className="bg-[#1a1b2e] p-10 rounded-[3rem] text-white flex flex-col md:flex-row items-center gap-10 shadow-2xl relative">
                             <img 
                                 src={guide_photo} 
                                 alt={guide_name} 
-                                className="w-36 h-36 rounded-[2rem] object-cover border-4 border-white/10"
+                                className="w-36 h-36 rounded-4xl object-cover border-4 border-white/10"
                             />
                             <div className="flex-1 space-y-6 text-center md:text-left">
                                 <div>
@@ -124,7 +124,7 @@ const TourPackageDetails = () => {
                         </div>
                     </div>
 
-                    {/* ডান পাশের স্টিকি বুকিং কার্ড */}
+                    {/* Right Side Sticky Booking Card */}
                     <div className="lg:col-span-1 h-full">
                         <div className="sticky top-24 space-y-6">
                             <div className="bg-white p-10 lg:p-12 rounded-[3.5rem] shadow-2xl shadow-gray-200/40 border border-gray-100 text-center">
@@ -135,7 +135,7 @@ const TourPackageDetails = () => {
                                 </div>
 
                                 <Link to={`/book-package/${_id}`}>
-                                    <button className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-black py-6 rounded-[2rem] transition-all duration-500 uppercase tracking-widest text-xs shadow-xl active:scale-95">
+                                    <button className="w-full bg-[#ff5e37] hover:bg-[#1a1b2e] text-white font-black py-6 rounded-4xl transition-all duration-500 uppercase tracking-widest text-xs shadow-xl active:scale-95">
                                         Confirm Your Spot
                                     </button>
                                 </Link>
@@ -152,7 +152,7 @@ const TourPackageDetails = () => {
                                 </p>
                             </div>
                             
-                            <div className="bg-[#ff5e37] p-6 rounded-[2rem] text-white flex items-center justify-between shadow-lg">
+                            <div className="bg-[#ff5e37] p-6 rounded-4xl text-white flex items-center justify-between shadow-lg">
                                 <div className="flex items-center gap-4">
                                     <ShieldCheck size={24} />
                                     <span className="text-[10px] font-black uppercase tracking-widest">Travel Insurance <br/> Fully Covered</span>
@@ -178,7 +178,7 @@ const HighlightCard = ({ label, value, icon }) => (
 
 const BenefitItem = ({ text }) => (
     <div className="flex items-center gap-3 text-[10px] font-black text-gray-500 uppercase tracking-tight px-2">
-        <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
+        <CheckCircle2 size={14} className="text-black shrink-0" />
         <span>{text}</span>
     </div>
 );

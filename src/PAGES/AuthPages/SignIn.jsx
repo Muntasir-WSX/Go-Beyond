@@ -4,8 +4,7 @@ import { Anchor, Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SignInPhoto from "../../assets/signInMain.jpg";
 import { FcGoogle } from 'react-icons/fc';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast from 'react-hot-toast'; // react-hot-toast ইম্পোর্ট করা হলো
 import { AuthContext } from '../../Context/AuthProvider';
 
 const SignIn = () => {
@@ -13,23 +12,33 @@ const SignIn = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // প্রাইভেট রুট থেকে আসলে সেই লোকেশন ধরবে, নাহলে হোম পেজ
     const from = location.state?.from?.pathname || "/";
+
+    // ব্ল্যাক-অরেঞ্জ টোস্ট স্টাইল
+    const toastStyle = {
+        style: {
+            border: '1px solid #ff5e37',
+            padding: '16px',
+            color: '#ffffff',
+            background: '#1a1b2e',
+            fontSize: '14px',
+            fontWeight: 'bold',
+        },
+        iconTheme: {
+            primary: '#ff5e37',
+            secondary: '#ffffff',
+        },
+    };
 
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
-                toast.success(`Welcome, ${result.user.displayName}!`, {
-                    position: "top-center",
-                    autoClose: 1000,
-                    theme: "dark",
-                });
-                // সফল হলে নির্দিষ্ট লোকেশনে রিডাইরেক্ট
+                toast.success(`Welcome, ${result.user.displayName}!`, toastStyle);
                 setTimeout(() => navigate(from, { replace: true }), 1000);
             })
             .catch(error => {
                 setLoading(false);
-                toast.error(error.message);
+                toast.error(error.message, { style: toastStyle.style });
             });
     };
 
@@ -41,13 +50,7 @@ const SignIn = () => {
 
         logIn(email, password)
             .then(result => {
-                toast.success(`Welcome back, ${result.user.displayName || 'Explorer'}!`, {
-                    position: "top-center",
-                    autoClose: 1000,
-                    theme: "dark",
-                    transition: Bounce,
-                });
-
+                toast.success(`Welcome back, ${result.user.displayName || 'Explorer'}!`, toastStyle);
                 setTimeout(() => {
                     form.reset();
                     navigate(from, { replace: true });
@@ -55,16 +58,15 @@ const SignIn = () => {
             })
             .catch(error => {
                 setLoading(false);
-                toast.error("Invalid email or password!", {
-                    position: "top-center",
-                    theme: "dark",
+                toast.error("Invalid email or password!", { 
+                    style: { ...toastStyle.style, border: '1px solid #ff0000' } 
                 });
             });
     };
 
     return (
         <div className="h-screen w-full flex flex-col lg:flex-row bg-white overflow-hidden">
-            <ToastContainer />
+            {/* ToastContainer এখান থেকে সরিয়ে ফেলা হয়েছে কারণ Toaster main.jsx এ আছে */}
             
             {/* --- LEFT SIDE: IMAGE SECTION --- */}
             <div className="hidden lg:flex lg:w-1/2 h-full relative">

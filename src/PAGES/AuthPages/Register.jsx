@@ -5,8 +5,7 @@ import { motion } from 'framer-motion';
 import registerImg from "../../assets/login.jpg";
 import { FcGoogle } from 'react-icons/fc';
 import { updateProfile } from 'firebase/auth';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast from 'react-hot-toast'; // react-hot-toast ইম্পোর্ট করা হলো
 import { AuthContext } from '../../Context/AuthProvider';
 
 const Register = () => {
@@ -14,18 +13,29 @@ const Register = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // আগের ডেস্টিনেশন ট্র্যাক করা (SignIn থেকে পাস করা state অথবা সরাসরি হোম)
+    // আগের ডেস্টিনেশন ট্র্যাক করা
     const from = location.state?.from?.pathname || "/";
+
+    // ব্ল্যাক-অরেঞ্জ টোস্ট স্টাইল (বুকিং এবং সাইন-ইন পেজের সাথে মিল রেখে)
+    const toastStyle = {
+        style: {
+            border: '1px solid #ff5e37',
+            padding: '16px',
+            color: '#ffffff',
+            background: '#1a1b2e',
+            fontSize: '14px',
+            fontWeight: 'bold',
+        },
+        iconTheme: {
+            primary: '#ff5e37',
+            secondary: '#ffffff',
+        },
+    };
 
     const handleGoogleRegister = () => {
         googleSignIn()
             .then(result => {
-                toast.success('Registered with Google Successfully!', {
-                    position: "top-center",
-                    autoClose: 1000,
-                    theme: "dark",
-                    transition: Bounce,
-                });
+                toast.success('Registered with Google Successfully!', toastStyle);
                 
                 setTimeout(() => {
                     navigate(from, { replace: true });
@@ -33,9 +43,7 @@ const Register = () => {
             })
             .catch(error => {
                 setLoading(false);
-                toast.error(`${error.message}`, {
-                    theme: "dark",
-                });
+                toast.error(error.message, { style: toastStyle.style });
             });
     };
 
@@ -47,9 +55,11 @@ const Register = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        // পাসওয়ার্ড ভ্যালিডেশন (Security Gap Fix)
+        // পাসওয়ার্ড ভ্যালিডেশন
         if (password.length < 6) {
-            toast.error('Password must be at least 6 characters!');
+            toast.error('Password must be at least 6 characters!', { 
+                style: { ...toastStyle.style, border: '1px solid #ff0000' } 
+            });
             return;
         }
 
@@ -63,35 +73,27 @@ const Register = () => {
                     photoURL: photo
                 })
                 .then(() => {
-                    toast.success('Registration Successful!', {
-                        position: "top-center",
-                        autoClose: 1000,
-                        theme: "dark",
-                    });
+                    toast.success('Registration Successful!', toastStyle);
 
                     setTimeout(() => {
                         form.reset();
-                        // ইউজার যেখানে যেতে চেয়েছিল সেখানে পাঠিয়ে দেওয়া
                         navigate(from, { replace: true });
                     }, 1000);
                 })
                 .catch(err => {
                     setLoading(false);
-                    toast.error(err.message);
+                    toast.error(err.message, { style: toastStyle.style });
                 });
             })
             .catch(error => {
                 setLoading(false);
-                toast.error(`❌ ${error.message}`, {
-                    position: "top-center",
-                    theme: "dark",
-                });
+                toast.error(` ${error.message}`, { style: toastStyle.style });
             });
     };
 
     return (
         <div className="h-screen w-full flex flex-col lg:flex-row bg-white overflow-hidden">
-            <ToastContainer />
+            {/* ToastContainer এখান থেকে সরিয়ে ফেলা হয়েছে */}
             
             {/* --- LEFT SIDE: FORM SECTION --- */}
             <div className="w-full lg:w-1/2 h-full flex items-center justify-center p-6 md:p-10 bg-white order-2 lg:order-1 overflow-y-auto lg:overflow-hidden">
@@ -105,7 +107,6 @@ const Register = () => {
                     </div>
 
                     <form onSubmit={handleRegister} className="space-y-3">
-                        {/* Name Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Full Name</label>
                             <div className="relative">
@@ -114,7 +115,6 @@ const Register = () => {
                             </div>
                         </div>
 
-                        {/* Photo Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Photo URL</label>
                             <div className="relative">
@@ -123,7 +123,6 @@ const Register = () => {
                             </div>
                         </div>
 
-                        {/* Email Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</label>
                             <div className="relative">
@@ -132,7 +131,6 @@ const Register = () => {
                             </div>
                         </div>
 
-                        {/* Password Input */}
                         <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Password</label>
                             <div className="relative">

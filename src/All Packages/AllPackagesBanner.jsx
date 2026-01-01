@@ -104,7 +104,7 @@ const AllPackagesBanner = () => {
                         </div>
                     </div>
 
-                    {/* বাটন (Added View Packages) */}
+                    {/* বাটন (Added View Packages)
                     <motion.div
                         whileHover={{ y: -5 }}
                         transition={{ type: "spring", stiffness: 300 }}
@@ -116,7 +116,7 @@ const AllPackagesBanner = () => {
                         >
                             View All Packages <ChevronRight size={18} />
                         </Link>
-                    </motion.div>
+                    </motion.div> */}
                 </motion.div>
 
             </div>

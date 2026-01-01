@@ -1,19 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Sparkles, CheckCircle2 } from 'lucide-react';
 
-// ইমেজ ইম্পোর্ট
+// আপনার ছবিগুলো ইম্পোর্ট করুন
 import image1 from "../assets/travelar.jpg";
-import image2 from "../assets/travelar2.jpg";
-import image3 from "../assets/travelar3.jpg";
-import image4 from "../assets/travelar4.jpg";
+import image3 from "../assets/Tourist.jpg";  
+import image2 from "../assets/travelar3.jpg";
+import image4 from "../assets/signin.jpg";
 
-const MyBookingsBanner = () => {
+const BookPackageBanner = () => {
     return (
-        <section className="w-full bg-[#FDFBF7] py-16 lg:py-24 overflow-hidden border-b border-gray-100">
+        <section className="bg-[#fcfcfc] py-16 lg:py-24 overflow-hidden border-b border-gray-100">
             <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-
+                
                 {/* 📸 Left Side: Image Grid (Exactly AllPackages Style) */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, x: -60 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -23,7 +24,7 @@ const MyBookingsBanner = () => {
                     <div className="relative p-4">
                         {/* The Window Grid Style with Exact Aspect Square */}
                         <div className="relative z-10 grid grid-cols-2 gap-4">
-                            {[image1, image2, image3, image4].map((img, index) => (
+                            {[image1, image3, image4, image2].map((img, index) => (
                                 <motion.div
                                     key={index}
                                     whileHover={{ scale: 1.05 }}
@@ -32,7 +33,7 @@ const MyBookingsBanner = () => {
                                 >
                                     <img 
                                         src={img} 
-                                        alt="My Booking" 
+                                        alt="Expedition" 
                                         className="w-full h-full object-cover" 
                                     />
                                 </motion.div>
@@ -45,23 +46,24 @@ const MyBookingsBanner = () => {
 
                         {/* Floating Status Badge (Pop-up like AllPackages) */}
                         <motion.div
-                            initial={{ scale: 0 }}
-                            whileInView={{ scale: 1 }}
+                            initial={{ scale: 0, rotate: 10 }}
+                            whileInView={{ scale: 1, rotate: 0 }}
                             transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
-                            className="absolute -bottom-6 right-10 z-20 bg-[#1a1b2e] text-white p-6 rounded-2xl shadow-2xl hidden md:block"
+                            className="absolute -bottom-6 right-10 z-20 bg-[#1a1b2e] text-white p-6 rounded-2xl shadow-2xl hidden md:flex items-center gap-4"
                         >
-                            <span className="text-3xl font-black block leading-none text-[#ff5e37]">
-                                TRIP
-                            </span>
-                            <span className="text-[10px] uppercase font-bold tracking-widest">
-                                Confirmed
-                            </span>
+                            <div className="bg-[#ff5e37] p-2 rounded-lg">
+                                <Sparkles size={18} className="text-white" />
+                            </div>
+                            <div>
+                                <span className="text-[10px] uppercase font-bold tracking-widest text-gray-400 block leading-none">Status</span>
+                                <span className="text-sm font-black uppercase tracking-tight">Booking Open</span>
+                            </div>
                         </motion.div>
                     </div>
                 </motion.div>
 
-                {/* 📝 Right Side: Text Content */}
-                <motion.div 
+                {/* 📝 Right Side: Content */}
+                <motion.div
                     initial={{ opacity: 0, x: 60 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -73,31 +75,38 @@ const MyBookingsBanner = () => {
                             className="text-[#ff5e37] font-serif italic text-2xl"
                             style={{ fontFamily: "'Playfair Display', serif" }}
                         >
-                            Your Reservations
+                            Reservation
                         </motion.h4>
-                        
-                        <h1 className="text-5xl lg:text-7xl font-black text-[#1a1b2e] leading-[1.05] uppercase tracking-tighter">
-                            Your Booked <br />
-                            <span className="text-[#ff5e37]">Adventures.</span>
-                        </h1>
+
+                        <h2 className="text-5xl lg:text-7xl font-black text-[#1a1b2e] leading-[1.05] uppercase tracking-tighter">
+                            Complete <br />
+                            <span className="text-[#ff5e37]">Your</span> Booking
+                        </h2>
                     </div>
 
                     <div className="space-y-6">
-                        <p className="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed">
-                            Keep track of all your upcoming journeys. Review your trip details, schedules, and 
-                            <span className="text-[#1a1b2e] font-bold"> booking status</span> in one place, optimized for your convenience.
+                        <p className="text-gray-500 leading-relaxed text-lg lg:text-xl font-medium">
+                            You are just one step away from your dream expedition. 
+                            Please fill out the details carefully to confirm your presence in our 
+                            <span className="text-[#1a1b2e] font-bold"> upcoming journey</span>.
                         </p>
 
-                        {/* Booking Summary Stats */}
+                        {/* Stats / Features section */}
                         <div className="flex gap-8 border-y border-gray-200 py-6">
-                            <div>
-                                <p className="text-2xl font-black text-[#1a1b2e]">History</p>
-                                <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Saved Trips</p>
+                            <div className="flex items-center gap-3">
+                                <CheckCircle2 className="text-emerald-500" size={28} />
+                                <div>
+                                    <p className="text-2xl font-black text-[#1a1b2e]">100%</p>
+                                    <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Secure Process</p>
+                                </div>
                             </div>
                             <div className="w-px bg-gray-200" />
-                            <div>
-                                <p className="text-2xl font-black text-[#1a1b2e]">Verified</p>
-                                <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Bookings</p>
+                            <div className="flex items-center gap-3">
+                                <CheckCircle2 className="text-emerald-500" size={28} />
+                                <div>
+                                    <p className="text-2xl font-black text-[#1a1b2e]">FAST</p>
+                                    <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Confirmation</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,4 +117,4 @@ const MyBookingsBanner = () => {
     );
 };
 
-export default MyBookingsBanner;
+export default BookPackageBanner;
