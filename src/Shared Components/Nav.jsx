@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom"; // NavLink ইম্পোর্ট করা হয়েছে
+import { Link, NavLink } from "react-router-dom";
 import {
   Menu,
   User,
@@ -27,18 +27,21 @@ const Nav = () => {
     { name: "About Us", path: "/about-us", icon: <Info size={18} /> },
   ];
 
+  // প্রোফাইল মেনুর লিঙ্কগুলোর জন্য অ্যাক্টিভ স্টাইল (Orange Underline)
+  const getProfileLinkClass = ({ isActive }) =>
+    `flex items-center justify-between px-4 py-2.5 hover:bg-gray-50 transition-all font-bold text-xs uppercase tracking-tight text-gray-700 group ${
+      isActive ? "text-[#ff5e37]" : ""
+    }`;
+
   const handleLogOut = () => {
     logOut()
-      .then(() => {
-        setIsUserOpen(false);
-      })
+      .then(() => setIsUserOpen(false))
       .catch((error) => console.error(error));
   };
 
-  // একটি কমন ফাংশন অ্যাক্টিভ ক্লাসের জন্য
   const getActiveLinkClass = ({ isActive }) =>
-    isActive 
-      ? "text-[#ff5e37] transition-colors" 
+    isActive
+      ? "text-[#ff5e37] transition-colors"
       : "hover:text-[#ff5e37] transition-colors text-white";
 
   return (
@@ -46,7 +49,6 @@ const Nav = () => {
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex flex-col">
-        {/* Navbar */}
         <nav className="bg-[#1a1b2e] text-white px-6 py-4 flex items-center justify-between shadow-lg">
           <div className="flex-none lg:hidden">
             <label htmlFor="my-drawer" className="btn btn-ghost btn-circle text-[#ff5e37]">
@@ -54,7 +56,6 @@ const Nav = () => {
             </label>
           </div>
 
-          {/* Logo Section */}
           <Link to="/" className="flex items-center cursor-pointer group">
             <div className="p-2 rounded-full flex items-center justify-center transition-transform group-hover:rotate-12 -mr-1">
               <Anchor size={22} className="text-[#ff5e37]" />
@@ -64,20 +65,14 @@ const Nav = () => {
             </h1>
           </Link>
 
-          {/* Navigation Links - Desktop (Active Logic Added) */}
           <div className="hidden lg:flex items-center gap-10 font-bold uppercase text-[12px] tracking-widest">
             {navLinks.map((link) => (
-              <NavLink 
-                key={link.name} 
-                to={link.path} 
-                className={getActiveLinkClass}
-              >
+              <NavLink key={link.name} to={link.path} className={getActiveLinkClass}>
                 {link.name}
               </NavLink>
             ))}
           </div>
 
-          {/* User Profile Section */}
           <div className="flex items-center gap-4">
             <div className="relative">
               <button
@@ -95,32 +90,44 @@ const Nav = () => {
                 <>
                   <div className="fixed inset-0 z-10" onClick={() => setIsUserOpen(false)}></div>
                   <div className="absolute right-0 mt-3 w-56 bg-white text-gray-800 rounded-xl shadow-2xl py-3 border border-gray-100 z-20 animate-in fade-in slide-in-from-top-2 duration-200">
-                    
                     {user ? (
                       <div className="space-y-1">
                         <div className="px-4 py-2 border-b border-gray-100 mb-2">
-                           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Signed in as</p>
-                           <p className="font-black text-sm text-[#1a1b2e] truncate">{user.displayName || 'Guest'}</p>
-                           <p className="text-[10px] text-gray-500 truncate">{user.email}</p>
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Signed in as</p>
+                          <p className="font-black text-sm text-[#1a1b2e] truncate">{user.displayName || 'Guest'}</p>
+                          <p className="text-[10px] text-gray-500 truncate">{user.email}</p>
                         </div>
 
-                        <Link to="/add-package" onClick={() => setIsUserOpen(false)} className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors font-bold text-xs uppercase tracking-tight text-gray-700">
-                          <PlusCircle size={16} className="text-[#ff5e37]" /> Add Package
-                        </Link>
-                        
-                        <Link to="/manage-packages" onClick={() => setIsUserOpen(false)} className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors font-bold text-xs uppercase tracking-tight text-gray-700">
-                          <Settings size={16} className="text-[#ff5e37]" /> Manage My Packages
-                        </Link>
-
-                        <Link to="/my-bookings" onClick={() => setIsUserOpen(false)} className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors font-bold text-xs uppercase tracking-tight text-gray-700">
-                          <BookmarkCheck size={16} className="text-[#ff5e37]" /> My Bookings
-                        </Link>
+                        {/* ড্রপডাউন লিঙ্কস উইথ অরেঞ্জ আন্ডারলাইন লজিক */}
+                        {[
+                          { to: "/add-package", icon: <PlusCircle size={16} />, label: "Add Package" },
+                          { to: "/manage-packages", icon: <Settings size={16} />, label: "Manage My Packages" },
+                          { to: "/my-bookings", icon: <BookmarkCheck size={16} />, label: "My Bookings" }
+                        ].map((item) => (
+                          <NavLink
+                            key={item.to}
+                            to={item.to}
+                            onClick={() => setIsUserOpen(false)}
+                            className={getProfileLinkClass}
+                          >
+                            {({ isActive }) => (
+                              <div className="w-full">
+                                <div className="flex items-center gap-3">
+                                  <span className={isActive ? "text-[#ff5e37]" : "text-gray-400 group-hover:text-[#ff5e37]"}>
+                                    {item.icon}
+                                  </span>
+                                  <span>{item.label}</span>
+                                </div>
+                                {isActive && (
+                                  <div className="h-0.5 bg-[#ff5e37] w-full mt-1 rounded-full animate-in slide-in-from-left duration-300"></div>
+                                )}
+                              </div>
+                            )}
+                          </NavLink>
+                        ))}
 
                         <div className="border-t border-gray-100 mt-2 pt-2">
-                          <button 
-                            onClick={handleLogOut}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 transition-colors font-black text-xs uppercase tracking-tight text-red-500"
-                          >
+                          <button onClick={handleLogOut} className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 transition-colors font-black text-xs uppercase tracking-tight text-red-500">
                             <LogOut size={16} /> Logout
                           </button>
                         </div>
@@ -145,7 +152,7 @@ const Nav = () => {
         </nav>
       </div>
 
-      {/* Drawer Sidebar (Active Logic for Mobile) */}
+      {/* Drawer Sidebar */}
       <div className="drawer-side">
         <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
         <ul className="menu p-6 w-80 min-h-full bg-[#1a1b2e] text-white">
@@ -162,14 +169,7 @@ const Nav = () => {
           <div className="space-y-2">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <NavLink 
-                  to={link.path} 
-                  className={({ isActive }) => 
-                    `flex items-center gap-4 py-4 px-4 rounded-xl transition-all text-lg font-medium group ${
-                      isActive ? "bg-[#ff5e37] text-white" : "hover:bg-gray-800"
-                    }`
-                  }
-                >
+                <NavLink to={link.path} className={({ isActive }) => `flex items-center gap-4 py-4 px-4 rounded-xl transition-all text-lg font-medium group ${isActive ? "bg-[#ff5e37] text-white" : "hover:bg-gray-800"}`}>
                   {({ isActive }) => (
                     <>
                       <span className={`${isActive ? "text-white" : "text-[#ff5e37]"} group-hover:text-white`}>

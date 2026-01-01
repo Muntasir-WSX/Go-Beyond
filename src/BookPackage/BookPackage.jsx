@@ -27,6 +27,8 @@ const BookPackage = () => {
     const bookingData = {
         tour_id: packageId,
         tour_name: tour?.tour_name,
+        tour_image: tour?.image, 
+        price: tour?.price,
         guide_name: tour?.guide_name,
         guide_email: tour?.guide_email,
         buyer_name: user?.displayName,
