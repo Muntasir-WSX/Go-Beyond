@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import UserAuth from '../CustomHooks/UserAuth';
 import MyBookingsBanner from './MyBookingsBanner';
-import { Calendar, User, MapPin, CheckCircle } from 'lucide-react';
+import { Calendar, User, MapPin, CheckCircle, Phone, FileText } from 'lucide-react';
 
 const MyBookings = () => {
     const { user } = UserAuth();
@@ -31,19 +31,21 @@ const MyBookings = () => {
     const handleConfirm = async (id) => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You want to mark this tour as completed?",
+            text: "You want to confirm this trip as completed?",
             icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#ff5e37",
             cancelButtonColor: "#1a1b2e",
-            confirmButtonText: "Yes, complete it!"
+            confirmButtonText: "Yes, Confirm Trip!"
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
                     const res = await axios.patch(`http://localhost:3000/bookings/${id}`);
                     if (res.data.modifiedCount > 0) {
-                        toast.success("Tour marked as completed!");
-                        fetchBookings(); // রিফ্রেশ ডাটা
+                        toast.success("Trip marked as completed!", {
+                            style: { background: '#1a1b2e', color: '#fff' }
+                        });
+                        fetchBookings(); 
                     }
                 } catch (error) {
                     toast.error("Failed to update status");
@@ -52,106 +54,117 @@ const MyBookings = () => {
         });
     };
 
-    if (loading) return <div className="text-center py-20 font-bold text-[#ff5e37]">Loading Your Adventures...</div>;
+    if (loading) return <div className="text-center py-20 font-black text-[#ff5e37] animate-pulse">LOADING ADVENTURES...</div>;
 
     return (
-        <div className="bg-[#fcfcfc] min-h-screen pb-20">
+        <div className="bg-[#fcfcfc] min-h-screen pb-20 font-sans">
             <MyBookingsBanner />
             
-            <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-10 relative z-10">
-                <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                    <div className="bg-[#1a1b2e] p-6 text-white flex justify-between items-center">
-                        <h2 className="text-xl font-black uppercase tracking-widest italic">
-                            My <span className="text-[#ff5e37]">Bookings</span>
-                        </h2>
-                        <span className="bg-[#ff5e37] text-white px-4 py-1 rounded-full text-xs font-bold uppercase">
-                            Total: {bookings.length}
-                        </span>
+            <div className="max-w-6xl mx-auto px-4 md:px-6 -mt-12 relative z-10">
+                <div className="mb-6 flex items-center justify-between bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-gray-100">
+                    <div>
+                        <h2 className="text-2xl font-black text-[#1a1b2e]">My Bookings</h2>
+                        <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">{bookings.length} booking(s) found</p>
                     </div>
+                </div>
 
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead className="bg-gray-50 text-gray-400 text-[10px] uppercase font-black tracking-widest border-b">
-                                <tr>
-                                    <th className="p-6">Tour Details</th>
-                                    <th className="p-6">Guide Info</th>
-                                    <th className="p-6">Schedule</th>
-                                    <th className="p-6">Status</th>
-                                    <th className="p-6 text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100">
-                                {bookings.map((booking) => (
-                                    <tr key={booking._id} className="hover:bg-gray-50 transition-colors">
-                                        {/* Tour Name & Image */}
-                                        <td className="p-6">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden hidden md:block">
-                                                    <img src={booking.tour_image || 'https://via.placeholder.com/150'} alt="" className="w-full h-full object-cover" />
-                                                </div>
-                                                <div>
-                                                    <p className="font-bold text-[#1a1b2e] leading-tight">{booking.tour_name}</p>
-                                                    <div className="flex items-center gap-1 text-[10px] text-gray-400 mt-1 uppercase font-bold">
-                                                        <MapPin size={12} className="text-[#ff5e37]" />
-                                                        {booking.departure_location || 'Not Set'} → {booking.destination || 'TBA'}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
+                <div className="space-y-6">
+                    {bookings.map((booking) => (
+                        <div key={booking._id} className="bg-white rounded-4xl p-6 md:p-8 shadow-xl shadow-gray-200/50 border border-gray-50 hover:border-[#ff5e37]/20 transition-all group">
+                            
+                            {/* Header: Title and Status */}
+                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                                <div>
+                                    <h3 className="text-xl md:text-2xl font-black text-[#1a1b2e] group-hover:text-[#ff5e37] transition-colors uppercase italic">
+                                        {booking.tour_name}
+                                    </h3>
+                                    <div className="flex items-center gap-2 text-gray-400 font-bold text-xs mt-1 uppercase tracking-wider">
+                                        <MapPin size={14} className="text-[#ff5e37]" />
+                                        {booking.departure_location || 'Point A'} <span className="text-[#ff5e37]">→</span> {booking.destination || 'Point B'}
+                                    </div>
+                                </div>
+                                <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${
+                                    booking.status === 'completed' 
+                                    ? 'bg-[#00a884]/10 text-[#00a884]' 
+                                    : 'bg-[#ff5e37]/10 text-[#ff5e37]'
+                                }`}>
+                                    <div className={`w-2 h-2 rounded-full animate-pulse ${booking.status === 'completed' ? 'bg-[#00a884]' : 'bg-[#ff5e37]'}`}></div>
+                                    {booking.status}
+                                </span>
+                            </div>
 
-                                        {/* Guide Info */}
-                                        <td className="p-6">
-                                            <div className="flex flex-col">
-                                                <span className="text-sm font-bold text-gray-700 flex items-center gap-2">
-                                                    <User size={14} className="text-[#ff5e37]" /> {booking.guide_name}
-                                                </span>
-                                                <span className="text-[11px] text-gray-400 italic mt-0.5">{booking.guide_email}</span>
-                                            </div>
-                                        </td>
+                            {/* Info Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                {/* Guide */}
+                                <div className="bg-gray-50/50 p-4 rounded-2xl border border-transparent hover:border-gray-100 transition-all">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Guide</p>
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-white rounded-xl shadow-sm text-[#ff5e37]"><User size={18}/></div>
+                                        <p className="font-black text-[#1a1b2e] text-sm">{booking.guide_name}</p>
+                                    </div>
+                                </div>
 
-                                        {/* Schedule */}
-                                        <td className="p-6">
-                                            <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
-                                                <Calendar size={14} className="text-[#ff5e37]" />
-                                                {booking.departure_date}
-                                            </div>
-                                        </td>
+                                {/* Contact */}
+                                <div className="bg-gray-50/50 p-4 rounded-2xl border border-transparent hover:border-gray-100 transition-all">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Contact</p>
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-white rounded-xl shadow-sm text-[#ff5e37]"><Phone size={18}/></div>
+                                        <p className="font-black text-[#1a1b2e] text-sm">{booking.buyer_contact || '+880 1712-XXXXXX'}</p>
+                                    </div>
+                                </div>
 
-                                        {/* Status */}
-                                        <td className="p-6">
-                                            <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${
-                                                booking.status === 'completed' 
-                                                ? 'bg-green-100 text-green-600' 
-                                                : 'bg-orange-100 text-[#ff5e37]'
-                                            }`}>
-                                                {booking.status}
-                                            </span>
-                                        </td>
+                                {/* Departure */}
+                                <div className="bg-gray-50/50 p-4 rounded-2xl border border-transparent hover:border-gray-100 transition-all">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Departure</p>
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-white rounded-xl shadow-sm text-[#ff5e37]"><Calendar size={18}/></div>
+                                        <p className="font-black text-[#1a1b2e] text-sm">{booking.departure_date}</p>
+                                    </div>
+                                </div>
+                            </div>
 
-                                        {/* Action Button */}
-                                        <td className="p-6 text-right">
-                                            {booking.status === 'pending' ? (
-                                                <button 
-                                                    onClick={() => handleConfirm(booking._id)}
-                                                    className="bg-[#1a1b2e] hover:bg-[#ff5e37] text-white text-[10px] font-black uppercase px-4 py-2 rounded-lg transition-all transform hover:scale-105"
-                                                >
-                                                    Confirm Tour
-                                                </button>
-                                            ) : (
-                                                <div className="flex items-center justify-end gap-1 text-green-600 font-bold text-[10px] uppercase">
-                                                    <CheckCircle size={14} /> Completed
-                                                </div>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    
+                            {/* Special Notes & Action */}
+                            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 pt-6 border-t border-gray-50">
+                                <div className="flex-1 w-full">
+                                    <div className="bg-gray-50/50 p-4 rounded-2xl w-full">
+                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                            <FileText size={14} className="text-[#ff5e37]" /> Special Notes
+                                        </p>
+                                        <p className="text-sm text-gray-600 font-medium italic">
+                                            {booking.notes || 'No special requirements mentioned.'}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col items-end gap-3 w-full lg:w-auto">
+                                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
+                                        Booked on {new Date(booking.booking_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    </p>
+                                    
+                                    {booking.status === 'pending' ? (
+                                        <button 
+                                            onClick={() => handleConfirm(booking._id)}
+                                            className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#1a1b2e] hover:bg-[#ff5e37] text-white px-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-widest transition-all transform hover:-translate-y-1 shadow-lg shadow-gray-200"
+                                        >
+                                            <CheckCircle size={18} /> Confirm Trip
+                                        </button>
+                                    ) : (
+                                        <button disabled className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#00a884] text-white px-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-widest cursor-not-allowed opacity-90 shadow-lg shadow-green-100">
+                                            <CheckCircle size={18} /> Completed
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
                     {bookings.length === 0 && (
-                        <div className="p-20 text-center">
-                            <p className="text-gray-400 font-medium">No bookings found. Start your journey today!</p>
+                        <div className="bg-white rounded-4xl p-20 text-center border-2 border-dashed border-gray-100">
+                            <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <MapPin size={40} className="text-gray-200" />
+                            </div>
+                            <h3 className="text-xl font-black text-[#1a1b2e]">No Adventures Found</h3>
+                            <p className="text-gray-400 mt-2 font-medium">Ready to explore? Book your first trip now!</p>
                         </div>
                     )}
                 </div>
