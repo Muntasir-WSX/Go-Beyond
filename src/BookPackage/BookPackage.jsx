@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router';
 import UserAuth from '../CustomHooks/UserAuth';
 import BookPackageBanner from './BookPackageBanner';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import toast from 'react-hot-toast'; // এটি ব্যবহার করুন
 
 const BookPackage = () => {
