@@ -30,7 +30,7 @@ import UserReview from "../../Shared Components/UserRivew";
 import FeaturedPackages from "./FeaturedPackages";
 
 const Home = () => {
-  const tourpackagePromise = fetch("http://localhost:3000/tourPackages").then(
+  const tourpackagePromise = fetch("https://go-beyond-server-mu.vercel.app//tourPackages").then(
     (response) => response.json()
   );
 

@@ -21,7 +21,7 @@ const ManagePackage = () => {
     const fetchMyPackages = async () => {
         try {
             // আপনার ব্যাকএন্ডের ৮ নম্বর API: app.get('/myPackages')
-            const res = await axios.get(`http://localhost:3000/myPackages?email=${user.email}`);
+            const res = await axios.get(`https://go-beyond-server-mu.vercel.app//myPackages?email=${user.email}`);
             setPackages(res.data);
             setLoading(false);
         } catch (error) {
@@ -43,7 +43,7 @@ const ManagePackage = () => {
             if (result.isConfirmed) {
                 try {
                     // আপনার ব্যাকএন্ডের ৯ নম্বর API: app.delete('/tourPackages/:id')
-                    const res = await axios.delete(`http://localhost:3000/tourPackages/${id}`);
+                    const res = await axios.delete(`https://go-beyond-server-mu.vercel.app//tourPackages/${id}`);
                     if (res.data.deletedCount > 0) {
                         toast.success("Package deleted successfully");
                         fetchMyPackages();

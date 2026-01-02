@@ -19,7 +19,8 @@ const MyBookings = () => {
 
     const fetchBookings = async () => {
         try {
-            const res = await axios.get(`http://localhost:3000/myBookings?email=${user.email}`);
+            const res = await axios.get(`https://go-beyond-server-mu.vercel.app//myBookings?email=${user.email}`);
+            { withCredentials: true }
             setBookings(res.data);
             setLoading(false);
         } catch (error) {
@@ -40,7 +41,7 @@ const MyBookings = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axios.patch(`http://localhost:3000/bookings/${id}`);
+                    const res = await axios.patch(`https://go-beyond-server-mu.vercel.app/bookings/${id}`,{});
                     if (res.data.modifiedCount > 0) {
                         toast.success("Trip marked as completed!", {
                             style: { background: '#1a1b2e', color: '#fff' }

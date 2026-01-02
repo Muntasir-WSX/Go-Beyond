@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       {
          path: "/tourpackages/:id",
          element: <TourPackageDetails></TourPackageDetails>,
-         loader: ({params}) => fetch(`http://localhost:3000/tourPackages/${params.id}`),
+         loader: ({params}) => fetch(`https://go-beyond-server-mu.vercel.app//tourPackages/${params.id}`),
       },
       {
             path: "/book-package/:id",
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       {
     path: "/update-package/:id",
     element: <PrivateRoutes> <UpdatePackage/> </PrivateRoutes>,
-    loader: ({params}) => fetch(`http://localhost:3000/tourpackages/${params.id}`),
+    loader: ({params}) => fetch(`https://go-beyond-server-mu.vercel.app//tourpackages/${params.id}`),
 },
       {
          path: "/packages",

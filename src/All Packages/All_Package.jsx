@@ -6,7 +6,7 @@ import Partners from "../Shared Components/Partners";
 
 const All_Package = () => {
   // প্রমিজটি এখানে ঠিক আছে, তবে রেন্ডারিং অপ্টিমাইজেশনের জন্য এটি কম্পোনেন্টের বাইরে রাখা যায়
-  const allPackagesPromise = fetch("http://localhost:3000/tourPackages").then(
+  const allPackagesPromise = fetch("https://go-beyond-server-mu.vercel.app//tourPackages").then(
     (res) => res.json()
   );
 

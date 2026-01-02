@@ -41,7 +41,7 @@ const UpdatePackage = () => {
     try {
       // আপনার ব্যাকএন্ডের ১০ নম্বর API অনুযায়ী: PATCH /updateTourPackage/:id
       const res = await axios.patch(
-        `http://localhost:3000/updateTourPackage/${loadedPackage._id}`,
+        `https://go-beyond-server-mu.vercel.app//updateTourPackage/${loadedPackage._id}`,
         updatedPackageData
       );
 

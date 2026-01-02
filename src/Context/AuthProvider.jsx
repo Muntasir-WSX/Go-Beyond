@@ -8,11 +8,12 @@ import {
     signInWithPopup 
 } from 'firebase/auth';
 import { auth } from '../Firebase/Firebase.init.js';
+import axios from 'axios';
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // ইউজারের সব ডাটা এখানে থাকবে
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
 
@@ -40,12 +41,31 @@ const AuthProvider = ({ children }) => {
         return signOut(auth);
     };
 
-    // ৫. বর্তমানে কোন ইউজার আছে কি না তা পর্যবেক্ষণ করা (অবশ্যই লাগবে)
+    // ৫. বর্তমানে কোন ইউজার আছে কি না তা পর্যবেক্ষণ করা + JWT Cookie সেট করা
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
             console.log("Current User Observed:", currentUser);
-            setUser(currentUser); // ইউজারের সব ডাটা (নাম, ছবি, ইমেইল) এখানে সেভ হবে
-            setLoading(false);
+
+            if (currentUser) {
+                // ইউজার থাকলে ব্যাকএন্ডে ইমেইল পাঠিয়ে কুকি সেট করা
+                const userInfo = { email: currentUser.email };
+                axios.post('https://go-beyond-server-mu.vercel.app//jwt', userInfo, { withCredentials: true })
+                    .then(res => {
+                        console.log("Token response:", res.data);
+                        setLoading(false);
+                    })
+                    .catch(err => {
+                        console.error("JWT Error:", err);
+                        setLoading(false);
+                    });
+            } else {
+                // ইউজার না থাকলে (লগআউট করলে) কুকি রিমুভ করা
+                axios.post('https://go-beyond-server-mu.vercel.app//logout', {}, { withCredentials: true })
+                    .then(() => {
+                        setLoading(false);
+                    });
+            }
         });
         return () => unSubscribe();
     }, []);

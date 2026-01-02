@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-
 import UserAuth from '../CustomHooks/UserAuth';
 import BookPackageBanner from './BookPackageBanner';
 import axios from 'axios';
-import toast from 'react-hot-toast'; // এটি ব্যবহার করুন
+import toast from 'react-hot-toast';
 
 const BookPackage = () => {
     const { id: packageId } = useParams();
@@ -14,68 +13,74 @@ const BookPackage = () => {
 
     // Fetch tour package details
     useEffect(() => {
-        axios.get(`http://localhost:3000/tourpackages/${packageId}`)
+        axios.get(`https://go-beyond-server-mu.vercel.app/tourpackages/${packageId}`)
             .then(res => setTour(res.data))
-            .catch(err => console.error(err));
+            .catch(err => console.error("Error fetching package:", err));
     }, [packageId]);
 
- const handleBooking = async (e) => {
-    e.preventDefault();
-    const form = e.target;
+    const handleBooking = async (e) => {
+        e.preventDefault();
+        const form = e.target;
 
-    const bookingData = {
-        tour_id: packageId,
-        tour_name: tour?.tour_name,
-        tour_image: tour?.image, 
-        price: tour?.price,
-        guide_name: tour?.guide_name,
-        guide_email: tour?.guide_email,
-        buyer_name: user?.displayName,
-        buyer_email: user?.email,
-        buyer_contact: form.contact.value,
-        booking_date: new Date(),
-        departure_date: tour?.departure_date,
-        notes: form.notes.value,
-        status: "pending"
+        const bookingData = {
+            tour_id: packageId,
+            tour_name: tour?.tour_name,
+            tour_image: tour?.image, 
+            price: tour?.price,
+            guide_name: tour?.guide_name,
+            guide_email: tour?.guide_email,
+            buyer_name: user?.displayName,
+            buyer_email: user?.email,
+            buyer_contact: form.contact.value,
+            booking_date: new Date(),
+            departure_date: tour?.departure_date,
+            notes: form.notes.value,
+            status: "pending"
+        };
+
+        try {
+            const res = await axios.post(
+                'https://go-beyond-server-mu.vercel.app/bookings', 
+                bookingData, 
+                { withCredentials: true }
+            );
+
+            // FIXED: Your server sends bookingResult directly as res.data
+            // We check for res.data.insertedId
+            if (res.data.insertedId) {
+                toast.success('Booking Successful!', {
+                    duration: 3000,
+                    style: {
+                        border: '1px solid #ff5e37',
+                        padding: '16px',
+                        color: '#ffffff',
+                        background: '#1a1b2e',
+                        fontWeight: 'bold'
+                    },
+                    iconTheme: {
+                        primary: '#ff5e37',
+                        secondary: '#ffffff',
+                    },
+                });
+
+                setTimeout(() => {
+                    navigate('/myBookings'); 
+                }, 2000);
+            }
+        } catch (error) {
+            console.error("Booking failed:", error);
+            toast.error('Failed to book. Please try again.', {
+                style: {
+                    background: '#1a1b2e',
+                    color: '#fff',
+                    border: '1px solid #ff0000',
+                }
+            });
+        }
     };
 
-    try {
-        const res = await axios.post('http://localhost:3000/bookings', bookingData);
-
-        if (res.data.bookingResult.insertedId) {
-            // ব্ল্যাক-অরেঞ্জ কাস্টম টোস্ট (react-hot-toast)
-            toast.success('Booking Successful!', {
-                duration: 3000,
-                style: {
-                    border: '1px solid #ff5e37',
-                    padding: '16px',
-                    color: '#ffffff',
-                    background: '#1a1b2e',
-                    fontWeight: 'bold'
-                },
-                iconTheme: {
-                    primary: '#ff5e37',
-                    secondary: '#ffffff',
-                },
-            });
-
-            setTimeout(() => {
-                navigate('/my-bookings');
-            }, 1500);
-        }
-    } catch (error) {
-        toast.error('Failed to book. Try again.', {
-            style: {
-                background: '#1a1b2e',
-                color: '#fff',
-                border: '1px solid #ff0000',
-            }
-        });
-    }
-};
-
     return (
-        <div className="bg-[#fcfcfc] min-h-screen pb-20">
+        <div className="bg-[#fcfcfc] min-h-screen pb-20 font-sans">
             <BookPackageBanner />
 
             {/* --- Form Section --- */}
@@ -93,49 +98,49 @@ const BookPackage = () => {
                             
                             {/* Tour Name (Read Only) */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase text-gray-400">Selected Tour</label>
-                                <input type="text" value={tour?.tour_name || ''} readOnly className="w-full bg-gray-50 border p-4 rounded-xl font-bold outline-none cursor-not-allowed" />
+                                <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Selected Tour</label>
+                                <input type="text" value={tour?.tour_name || ''} readOnly className="w-full bg-gray-50 border border-gray-100 p-4 rounded-xl font-bold outline-none cursor-not-allowed text-[#1a1b2e]" />
                             </div>
 
-                            {/* Price (Read Only) */}
+                            {/* Price (Read Only) - UPDATED TO BDT ৳ */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase text-gray-400">Price Per Person</label>
-                                <input type="text" value={`$${tour?.price || ''}`} readOnly className="w-full bg-gray-50 border p-4 rounded-xl text-[#ff5e37] font-black outline-none cursor-not-allowed" />
+                                <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Price Per Person</label>
+                                <input type="text" value={`৳${tour?.price || ''}`} readOnly className="w-full bg-gray-50 border border-gray-100 p-4 rounded-xl text-[#ff5e37] font-black outline-none cursor-not-allowed" />
                             </div>
 
                             {/* Buyer Name (Read Only) */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase text-gray-400">Full Name</label>
-                                <input type="text" value={user?.displayName || ''} readOnly className="w-full bg-gray-50 border p-4 rounded-xl font-medium outline-none cursor-not-allowed" />
+                                <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Full Name</label>
+                                <input type="text" value={user?.displayName || ''} readOnly className="w-full bg-gray-50 border border-gray-100 p-4 rounded-xl font-medium outline-none cursor-not-allowed" />
                             </div>
 
                             {/* Buyer Email (Read Only) */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase text-gray-400">Email Address</label>
-                                <input type="email" value={user?.email || ''} readOnly className="w-full bg-gray-50 border p-4 rounded-xl font-medium outline-none cursor-not-allowed" />
+                                <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Email Address</label>
+                                <input type="email" value={user?.email || ''} readOnly className="w-full bg-gray-50 border border-gray-100 p-4 rounded-xl font-medium outline-none cursor-not-allowed" />
                             </div>
 
                             {/* Buyer Contact (REQUIRED) */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase text-gray-400">Your Contact No.</label>
-                                <input name="contact" type="tel" placeholder="+880 1XXX-XXXXXX" required className="w-full border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-[#ff5e37] outline-none" />
+                                <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Your Contact No.</label>
+                                <input name="contact" type="tel" placeholder="+880 1XXX-XXXXXX" required className="w-full border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-[#ff5e37] focus:border-transparent outline-none transition-all" />
                             </div>
 
-                            {/* Preferred Date (Auto-filled from Package) */}
+                            {/* Departure Date */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase text-gray-400">Departure Date</label>
-                                <input type="text" value={tour?.departure_date || ''} readOnly className="w-full bg-gray-100 border p-4 rounded-xl outline-none" />
+                                <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Departure Date</label>
+                                <input type="text" value={tour?.departure_date || ''} readOnly className="w-full bg-gray-100 border border-gray-100 p-4 rounded-xl outline-none text-gray-500 font-bold" />
                             </div>
                         </div>
 
                         {/* Special Note */}
                         <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase text-gray-400">Special Note (Optional)</label>
-                            <textarea name="notes" rows="3" placeholder="Any specific requirements?" className="w-full border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-[#ff5e37] outline-none"></textarea>
+                            <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Special Note (Optional)</label>
+                            <textarea name="notes" rows="3" placeholder="Any specific requirements or allergies?" className="w-full border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-[#ff5e37] focus:border-transparent outline-none transition-all"></textarea>
                         </div>
 
                         {/* Submit Button */}
-                        <button type="submit" className="w-full bg-[#ff5e37] text-white font-black uppercase tracking-widest py-5 rounded-2xl shadow-xl hover:bg-[#1a1b2e] transition-all duration-300">
+                        <button type="submit" className="w-full bg-[#ff5e37] text-white font-black uppercase tracking-widest py-5 rounded-2xl shadow-xl hover:bg-[#1a1b2e] transform hover:-translate-y-1 transition-all duration-300 active:scale-95">
                             Book This Package Now
                         </button>
                     </form>

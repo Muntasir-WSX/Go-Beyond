@@ -48,7 +48,7 @@ const AddPackage = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/tourPackages",
+        "https://go-beyond-server-mu.vercel.app//tourPackages",
         packageData
       );
       if (res.data.insertedId) {

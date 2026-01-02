@@ -130,7 +130,7 @@ const TourPackageDetails = () => {
                             <div className="bg-white p-10 lg:p-12 rounded-[3.5rem] shadow-2xl shadow-gray-200/40 border border-gray-100 text-center">
                                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] block mb-6">Price Per Expedition</span>
                                 <div className="mb-10">
-                                    <span className="text-7xl font-black text-[#1a1b2e] tracking-tighter">${price}</span>
+                                    <span className="text-7xl font-black text-[#1a1b2e] tracking-tighter">৳{price}</span>
                                     <span className="text-sm font-bold text-gray-400 ml-1 uppercase">/ Person</span>
                                 </div>
 
