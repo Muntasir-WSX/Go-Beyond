@@ -12,6 +12,7 @@ import All_Package from "../All Packages/All_Package";
 import TourPackageDetails from "../TourPackageDetails/TourPackageDetails";
 import BookPackage from "../BookPackage/BookPackage";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+import UpdatePackage from "../ManagePackage/UpdatePackage";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
             path: "/book-package/:id",
             element: <PrivateRoutes><BookPackage></BookPackage></PrivateRoutes>,
       },
+      {
+    path: "/update-package/:id",
+    element: <PrivateRoutes> <UpdatePackage/> </PrivateRoutes>,
+    loader: ({params}) => fetch(`http://localhost:3000/tourpackages/${params.id}`),
+},
       {
          path: "/packages",
          element: <All_Package></All_Package>,
