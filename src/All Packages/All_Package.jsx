@@ -109,7 +109,7 @@ const All_Package = () => {
         </div>
 
         {/* Packages Grid Area */}
-        <div className="min-h-[400px]">
+        <div className="min-h-100">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
               <span className="loading loading-bars loading-xl text-[#ff5e37]"></span>
