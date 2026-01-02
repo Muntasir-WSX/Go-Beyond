@@ -9,7 +9,6 @@ const Story = () => {
             <div className="max-w-7xl mx-auto px-6 lg:px-10">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                     
-                    {/* LEFT SIDE: Image Section with Decorative Elements */}
                     <div className="w-full lg:w-1/2 relative">
                         <motion.div 
                             initial={{ opacity: 0, x: -50 }}
@@ -22,7 +21,7 @@ const Story = () => {
                                 alt="Our Journey" 
                                 className="rounded-3xl shadow-2xl w-full h-100 lg:h-125 object-cover"
                             />
-                            {/* Floating Badge */}
+                          
                             <div className="absolute -bottom-6 -right-6 bg-[#ff5e37] p-6 rounded-2xl shadow-xl hidden md:block">
                                 <div className="text-white text-center">
                                     <span className="block text-3xl font-black italic">6+</span>
@@ -31,18 +30,17 @@ const Story = () => {
                             </div>
                         </motion.div>
                         
-                        {/* Background Decoration */}
+                       
                         <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#ff5e37]/10 rounded-full blur-3xl -z-10"></div>
                     </div>
 
-                    {/* RIGHT SIDE: Content Section */}
                     <div className="w-full lg:w-1/2 space-y-6">
                         <div className="space-y-2">
                             <motion.span 
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
                                 className="text-[#ff5e37] font-bold italic text-lg lg:text-xl block"
-                                style={{ fontFamily: 'cursive' }} // Handwriting style placeholder
+                                style={{ fontFamily: 'cursive' }} 
                             >
                                 Get to know us
                             </motion.span>
@@ -70,8 +68,6 @@ const Story = () => {
                                 </div>
                             ))}
                         </div>
-
-                        {/* Counters/Stats */}
                         <div className="flex items-center gap-10 pt-6 border-t border-gray-100">
                             <div className="flex items-center gap-3">
                                 <div className="p-3 bg-gray-50 rounded-xl text-[#ff5e37]">

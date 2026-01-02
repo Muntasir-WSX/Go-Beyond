@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, CheckCircle2 } from 'lucide-react';
-
-// আপনার ছবিগুলো ইম্পোর্ট করুন
 import image1 from "../assets/travelar.jpg";
 import image3 from "../assets/Tourist.jpg";  
 import image2 from "../assets/travelar3.jpg";

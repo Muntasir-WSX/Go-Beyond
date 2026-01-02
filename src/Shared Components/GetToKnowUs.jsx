@@ -42,9 +42,7 @@ const GetToKnowUs = () => {
               transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
               className="absolute -bottom-6 left-10 z-20 bg-[#ff5e37] text-white p-5 rounded-2xl shadow-xl hidden md:block"
             >
-              <span className="text-3xl font-black block leading-none">
-                6+
-              </span>
+              <span className="text-3xl font-black block leading-none">6+</span>
               <span className="text-[10px] uppercase font-bold tracking-widest">
                 Years Experience
               </span>
@@ -105,7 +103,6 @@ const GetToKnowUs = () => {
             ))}
           </div>
 
-          {/* বাটন */}
           <motion.div
             whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300 }}

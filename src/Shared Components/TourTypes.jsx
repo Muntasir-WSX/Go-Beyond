@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Ship, Binoculars } from "lucide-react";
-import { GiDeer, GiMountainClimbing, GiMountaintop,} from "react-icons/gi";
+import { GiDeer, GiMountainClimbing, GiMountaintop } from "react-icons/gi";
 import { FaDraftingCompass, FaUmbrellaBeach } from "react-icons/fa";
 
 const TourTypes = () => {
-
   const [activeTab, setActiveTab] = useState("Adventure");
 
   const tourCategories = [
-    { id: 1, name: "Adventure", icon: <FaDraftingCompass size={40} />, count: 12 },
+    {
+      id: 1,
+      name: "Adventure",
+      icon: <FaDraftingCompass size={40} />,
+      count: 12,
+    },
     { id: 2, name: "Mountain", icon: <GiMountaintop size={40} />, count: 10 },
     { id: 3, name: "Beach", icon: <FaUmbrellaBeach size={40} />, count: 20 },
     { id: 4, name: "Sightseeing", icon: <Binoculars size={40} />, count: 15 },
     { id: 5, name: "Cruising", icon: <Ship size={40} />, count: 5 },
     { id: 6, name: "Wildlife", icon: <GiDeer size={40} />, count: 8 },
-    { id: 7, name: "Expedition", icon: <GiMountainClimbing size={40} />, count: 6 },
+    {
+      id: 7,
+      name: "Expedition",
+      icon: <GiMountainClimbing size={40} />,
+      count: 6,
+    },
   ];
 
   const tabMessages = {
@@ -82,7 +91,7 @@ const TourTypes = () => {
             transition={{ delay: 0.2 }}
             className="text-4xl lg:text-5xl font-black text-[#1a1b2e] mt-2 uppercase tracking-tight"
           >
-            Avaiable Trips 
+            Avaiable Trips
           </motion.h2>
         </div>
 

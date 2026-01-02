@@ -7,7 +7,6 @@ import AuthProvider from './Context/AuthProvider';
 import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 
-// ৩. গ্লোবাল কনফিগারেশন: প্রতিবার withCredentials লিখতে হবে না
 axios.defaults.withCredentials = true;
 
 const root = document.getElementById("root");

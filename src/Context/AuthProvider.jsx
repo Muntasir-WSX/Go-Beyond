@@ -16,43 +16,38 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
+    axios.defaults.withCredentials = true;
 
-    // ১. রেজিস্ট্রেশন
     const creatUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    // ২. লগইন
     const logIn = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
 
-    // ৩. গুগল লগইন
     const googleSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
     };
 
-    // ৪. লগ-আউট
     const logOut = () => {
         setLoading(true);
         return signOut(auth);
     };
 
-    // ৫. বর্তমানে কোন ইউজার আছে কি না তা পর্যবেক্ষণ করা + JWT Cookie সেট করা
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            console.log("Current User Observed:", currentUser);
+            const baseUrl = 'https://go-beyond-server-mu.vercel.app';
 
             if (currentUser) {
-                // ইউজার থাকলে ব্যাকএন্ডে ইমেইল পাঠিয়ে কুকি সেট করা
                 const userInfo = { email: currentUser.email };
-                axios.post('https://go-beyond-server-mu.vercel.app//jwt', userInfo, { withCredentials: true })
+                axios.post(`${baseUrl}/jwt`, userInfo)
                     .then(res => {
-                        console.log("Token response:", res.data);
+                        console.log("Token response success");
                         setLoading(false);
                     })
                     .catch(err => {
@@ -60,9 +55,11 @@ const AuthProvider = ({ children }) => {
                         setLoading(false);
                     });
             } else {
-                // ইউজার না থাকলে (লগআউট করলে) কুকি রিমুভ করা
-                axios.post('https://go-beyond-server-mu.vercel.app//logout', {}, { withCredentials: true })
+                axios.post(`${baseUrl}/logout`, {})
                     .then(() => {
+                        setLoading(false);
+                    })
+                    .catch(err => {
                         setLoading(false);
                     });
             }

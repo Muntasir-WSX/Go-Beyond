@@ -1,7 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-// ইমেজ পাথগুলো আপনার প্রোজেক্ট অনুযায়ী চেক করে নিন
 import image1 from "../assets/bandarban.jpg";
 import image2 from "../assets/naval-2.jpg";
 import image3 from "../assets/bogalake.png"; 
@@ -12,7 +10,6 @@ const ManageMyPackageBanner = () => {
         <section className="w-full bg-[#FDFBF7] py-16 lg:py-24 overflow-hidden border-b border-gray-100">
             <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
-                {/* 📸 Left Side: Image Grid (Exactly AllPackages Style) */}
                 <motion.div 
                     initial={{ opacity: 0, x: -60 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -21,7 +18,6 @@ const ManageMyPackageBanner = () => {
                     className="w-full lg:w-1/2"
                 >
                     <div className="relative p-4">
-                        {/* The Window Grid Style with Exact Aspect Square */}
                         <div className="relative z-10 grid grid-cols-2 gap-4">
                             {[image1, image2, image3, image4].map((img, index) => (
                                 <motion.div
@@ -39,11 +35,10 @@ const ManageMyPackageBanner = () => {
                             ))}
                         </div>
 
-                        {/* Corner Accents (Matching Global Style) */}
                         <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-[#ff5e37] rounded-tl-3xl z-0"></div>
                         <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-[#ff5e37] rounded-br-3xl z-0"></div>
 
-                        {/* Floating Experience Badge (Pop-up like AllPackages) */}
+                        
                         <motion.div
                             initial={{ scale: 0 }}
                             whileInView={{ scale: 1 }}
@@ -60,7 +55,7 @@ const ManageMyPackageBanner = () => {
                     </div>
                 </motion.div>
 
-                {/* 📝 Right Side: Text Content */}
+            
                 <motion.div 
                     initial={{ opacity: 0, x: 60 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -88,7 +83,7 @@ const ManageMyPackageBanner = () => {
                             <span className="text-[#1a1b2e] font-bold"> journey listings</span> from this centralized dashboard designed for easy management.
                         </p>
 
-                        {/* Summary Stats */}
+                  
                         <div className="flex gap-8 border-y border-gray-200 py-6">
                             <div>
                                 <p className="text-2xl font-black text-[#1a1b2e]">Real-time</p>

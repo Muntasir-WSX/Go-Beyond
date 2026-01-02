@@ -1,6 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Link ইম্পোর্ট করা হয়েছে
-import { Phone, Mail, MapPin, Check, Anchor, Facebook, Instagram, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Check,
+  Anchor,
+  Facebook,
+  Instagram,
+  Twitter,
+} from "lucide-react";
 
 const companyLinks = [
   "About Us",
@@ -27,7 +36,6 @@ const contactInfo = {
 const Footer = () => {
   return (
     <footer className="bg-[#1a1b2e] text-white pt-16 pb-8 px-6 lg:px-10 relative overflow-hidden">
-      
       {/* Background Google Map Overlay */}
       <div className="absolute right-0 top-0 h-full w-full lg:w-1/2 opacity-[0.03] pointer-events-none z-0">
         <iframe
@@ -41,7 +49,6 @@ const Footer = () => {
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
-        
         {/* 1. Logo & Contact Section */}
         <div className="space-y-6">
           <Link to="/" className="flex items-center cursor-pointer group">
@@ -52,9 +59,9 @@ const Footer = () => {
               Go<span className="text-gray-400">Beyond</span>
             </h2>
           </Link>
-          
+
           <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-            Discover the hidden gems of Chittagong and beyond. Your premium 
+            Discover the hidden gems of Chittagong and beyond. Your premium
             journey starts with us.
           </p>
 
@@ -76,7 +83,9 @@ const Footer = () => {
 
         {/* 2. Company Links (Modified Logic) */}
         <div>
-          <h3 className="text-lg font-black uppercase tracking-widest mb-8 text-white">Company</h3>
+          <h3 className="text-lg font-black uppercase tracking-widest mb-8 text-white">
+            Company
+          </h3>
           <ul className="space-y-4">
             {companyLinks.map((link, index) => (
               <li key={index}>
@@ -93,7 +102,9 @@ const Footer = () => {
 
         {/* 3. Explore Links (All pointed to /) */}
         <div>
-          <h3 className="text-lg font-black uppercase tracking-widest mb-8 text-white">Explore</h3>
+          <h3 className="text-lg font-black uppercase tracking-widest mb-8 text-white">
+            Explore
+          </h3>
           <ul className="space-y-4">
             {exploreLinks.map((link, index) => (
               <li key={index}>
@@ -110,8 +121,12 @@ const Footer = () => {
 
         {/* 4. Newsletter Section */}
         <div className="bg-gray-800/30 p-6 rounded-2xl border border-gray-700/50">
-          <h3 className="text-lg font-black uppercase tracking-widest mb-4">Newsletter</h3>
-          <p className="text-xs text-gray-400 mb-4 font-medium">Subscribe for exclusive travel deals!</p>
+          <h3 className="text-lg font-black uppercase tracking-widest mb-4">
+            Newsletter
+          </h3>
+          <p className="text-xs text-gray-400 mb-4 font-medium">
+            Subscribe for exclusive travel deals!
+          </p>
           <div className="space-y-3">
             <input
               type="email"
@@ -136,12 +151,21 @@ const Footer = () => {
         <p className="text-[11px] font-bold uppercase tracking-widest text-gray-500 text-center md:text-left">
           © {new Date().getFullYear()} Go Beyond. Built for Explorers.
         </p>
-        
+
         {/* Social Icons */}
         <div className="flex items-center gap-5 text-gray-400">
-           <Facebook size={18} className="hover:text-[#ff5e37] cursor-pointer transition-colors" />
-           <Instagram size={18} className="hover:text-[#ff5e37] cursor-pointer transition-colors" />
-           <Twitter size={18} className="hover:text-[#ff5e37] cursor-pointer transition-colors" />
+          <Facebook
+            size={18}
+            className="hover:text-[#ff5e37] cursor-pointer transition-colors"
+          />
+          <Instagram
+            size={18}
+            className="hover:text-[#ff5e37] cursor-pointer transition-colors"
+          />
+          <Twitter
+            size={18}
+            className="hover:text-[#ff5e37] cursor-pointer transition-colors"
+          />
         </div>
       </div>
     </footer>

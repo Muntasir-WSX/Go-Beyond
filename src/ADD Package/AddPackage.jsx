@@ -17,8 +17,6 @@ import {
 
 const AddPackage = () => {
   const { user } = UserAuth();
-
-  // গাইড নাম এডিটেবল রাখার জন্য স্টেট (ডিফল্ট ফায়ারবেস নাম)
   const [guideName, setGuideName] = useState(user?.displayName || "");
 
   const handleAddPackage = async (e) => {
@@ -27,10 +25,10 @@ const AddPackage = () => {
     const today = format(new Date(), "yyyy-MM-dd");
 
     const packageData = {
-      // ১. এডিটেবল ইনপুট (ইউজার পরিবর্তন করতে পারবে)
+      // editable fields
       tour_name: form.tour_name.value,
-      destination: form.destination.value, // এডিটেবল
-      guide_name: form.guide_name.value, // এডিটেবল
+      destination: form.destination.value,
+      guide_name: form.guide_name.value,
       guide_contact_no: form.guide_contact_no.value,
       image: form.image.value,
       duration: form.duration.value,
@@ -39,7 +37,7 @@ const AddPackage = () => {
       departure_location: form.departure_location.value,
       package_details: form.package_details.value,
 
-      // ২. ফিক্সড ইনফো (অটোমেটিক যাবে)
+      // Auto-fill guide info from logged-in user
       guide_email: user?.email,
       guide_photo: user?.photoURL,
       created_at: today,
@@ -59,7 +57,7 @@ const AddPackage = () => {
           confirmButtonColor: "#ff5e37",
         });
         form.reset();
-        setGuideName(user?.displayName); // রিসেট করার পর আবার ডিফল্ট নাম
+        setGuideName(user?.displayName);
       }
     } catch (error) {
       toast.error("Process failed. Check your connection.");
@@ -79,7 +77,6 @@ const AddPackage = () => {
           </div>
 
           <form onSubmit={handleAddPackage} className="p-8 md:p-12 space-y-6">
-            {/* ট্যুর ও গন্তব্য (এডিটেবল) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400">
@@ -113,7 +110,6 @@ const AddPackage = () => {
               </div>
             </div>
 
-            {/* গাইড ইনফো (নাম এডিটেবল রাখা হয়েছে) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400">
@@ -153,7 +149,6 @@ const AddPackage = () => {
               </div>
             </div>
 
-            {/* ইমেজ ও প্রাইস */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400">
@@ -173,29 +168,26 @@ const AddPackage = () => {
                   />
                 </div>
               </div>
-                <div className="space-y-1">
-  <label className="text-[10px] font-black uppercase text-gray-400">
-    Package Price (BDT)
-  </label>
-  <div className="relative">
-    {/* এখানে DollarSign আইকন সরিয়ে টেক্সট বসানো হয়েছে */}
-    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-black text-xs">
-      ৳
-    </span>
-    <input
-      required
-      name="price"
-      type="number"
-      placeholder="5500"
-      className="w-full pl-12 pr-5 py-4 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-[#ff5e37] font-bold"
-    />
-  </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-black uppercase text-gray-400">
+                  Package Price (BDT)
+                </label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-black text-xs">
+                    ৳
+                  </span>
+                  <input
+                    required
+                    name="price"
+                    type="number"
+                    placeholder="5500"
+                    className="w-full pl-12 pr-5 py-4 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-[#ff5e37] font-bold"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* ডেট ও লোকেশন */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Duration */}
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400 ml-1">
                   Duration
@@ -211,13 +203,11 @@ const AddPackage = () => {
                 </div>
               </div>
 
-              {/* Travel Date */}
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400 ml-1">
                   Travel Date
                 </label>
                 <div className="relative">
-                  {/* আইকনটি ইনপুট ফিল্ডের ভেতরে দেখানোর জন্য absolute পজিশন ব্যবহার করা হয়েছে */}
                   <Calendar
                     className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
                     size={16}
@@ -231,7 +221,6 @@ const AddPackage = () => {
                 </div>
               </div>
 
-              {/* Departure From */}
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400 ml-1">
                   Departure From

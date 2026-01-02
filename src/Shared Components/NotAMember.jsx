@@ -1,21 +1,18 @@
-import React, { useContext } from "react"; // useContext ইম্পোর্ট করুন
+import React, { useContext } from "react"; 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { UserPlus, LogIn, Anchor, Sparkles } from "lucide-react";
-import { AuthContext } from "../Context/AuthProvider"; // আপনার পাথ অনুযায়ী দিন
+import { AuthContext } from "../Context/AuthProvider";
 
 const NotAMember = () => {
-  // Context থেকে ইউজার চেক করুন
-  const { user, loading } = useContext(AuthContext);
-
-  // লোডিং অবস্থায় কিছু দেখানোর দরকার নেই অথবা ইউজার থাকলে এই পুরো সেকশন রিটার্ন করবে না
+const { user, loading } = useContext(AuthContext);
   if (loading || user) {
     return null; 
   }
 
   return (
     <section className="relative bg-[#f4f4f4] py-10 lg:py-20 overflow-hidden">
-      {/* Background Pattern */}
+     
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
         <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-[#1a1b2e]">
           <path d="M0,500 C200,400 300,600 500,500 C700,400 800,600 1000,500" stroke="currentColor" fill="transparent" strokeWidth="2" />
@@ -24,8 +21,6 @@ const NotAMember = () => {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-          
-          {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -53,8 +48,6 @@ const NotAMember = () => {
               </Link>
             </div>
           </motion.div>
-
-          {/* Right Visuals */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -62,7 +55,6 @@ const NotAMember = () => {
             className="w-full lg:w-1/2 relative flex justify-center items-center h-75 lg:h-100"
           >
             <div className="relative w-full max-w-70 sm:max-w-[320px] h-full flex justify-center items-center">
-              {/* Dark Phone */}
               <motion.div
                 style={{ rotate: -12 }}
                 className="absolute left-0 sm:left-4 w-28 h-52 sm:w-36 sm:h-64 bg-[#1a1b2e] rounded-3xl border-[5px] border-[#2a2b3e] shadow-2xl overflow-hidden flex flex-col items-center justify-center z-10"
@@ -73,8 +65,6 @@ const NotAMember = () => {
                   <span className="font-bold text-[8px] sm:text-[10px] tracking-tighter uppercase">Go Beyond</span>
                 </div>
               </motion.div>
-
-              {/* Orange Phone */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -89,8 +79,6 @@ const NotAMember = () => {
                   <span className="font-black text-[8px] sm:text-[10px] tracking-tighter uppercase leading-none">Go Beyond</span>
                 </div>
               </motion.div>
-
-              {/* Glow Effect */}
               <div className="absolute w-40 h-40 bg-[#ff5e37] opacity-10 blur-[80px] rounded-full"></div>
             </div>
           </motion.div>

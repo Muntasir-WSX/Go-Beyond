@@ -1,23 +1,42 @@
-import React, { Suspense } from "react";
-import { motion } from "framer-motion"; // ১. এই লাইনটি অবশ্যই লাগবে
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import axios from "axios";
 import AllPackagesBanner from "./AllPackagesBanner";
 import FeaturedPackages from "../PAGES/HOME/FeaturedPackages";
 import Partners from "../Shared Components/Partners";
 
 const All_Package = () => {
-  // প্রমিজটি এখানে ঠিক আছে, তবে রেন্ডারিং অপ্টিমাইজেশনের জন্য এটি কম্পোনেন্টের বাইরে রাখা যায়
-  const allPackagesPromise = fetch("https://go-beyond-server-mu.vercel.app//tourPackages").then(
-    (res) => res.json()
-  );
+  const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAllPackages = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axios.get(
+          "https://go-beyond-server-mu.vercel.app/tourpackages",
+          {
+            withCredentials: true,
+          }
+        );
+        setPackages(response.data);
+      } catch (error) {
+        console.error("API Error:", error.response || error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllPackages();
+  }, []);
 
   return (
     <div className="bg-gray-50 flex flex-col gap-20 lg:gap-32">
-      {/* ১. Banner Section */}
       <section>
         <AllPackagesBanner />
       </section>
 
-      {/* ২. All Packages Grid Section */}
       <section className="container mx-auto px-6">
         <div className="text-center mb-16 flex flex-col items-center">
           <motion.span
@@ -51,29 +70,33 @@ const All_Package = () => {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             viewport={{ once: true }}
-            className="text-gray-500 text-lg md:text-xl font-medium max-w-2xl mx-auto italic leading-relaxed"
+            className="text-gray-500 text-lg md:text-xl font-medium max-w-2xl mx-auto italic leading-relaxed text-center"
           >
             "From the majestic hills of Chittagong to the crystal waters of the
             Bay, find the perfect escape from our wide range of exclusive tour
             packages."
           </motion.p>
         </div>
-
-        <Suspense
-          fallback={
-            <div className="text-center py-20 text-xl font-bold text-[#ff5e37] animate-pulse">
-              Loading all packages...
+        <div className="min-h-75">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+             
+              <span className="loading loading-bars loading-xl text-[#ff5e37]"></span>
+              <p className="text-[#ff5e37] font-bold animate-pulse">
+                Loading Awesome Packages...
+              </p>
             </div>
-          }
-        >
-          <FeaturedPackages
-            tourpackagePromise={allPackagesPromise}
-            showAll={true}
-          />
-        </Suspense>
+          ) : packages.length > 0 ? (
+            <FeaturedPackages packages={packages} showAll={true} />
+          ) : (
+            <div className="text-center py-20 text-gray-500 text-xl font-medium">
+              No packages found. Check your database connection!
+            </div>
+          )}
+        </div>
       </section>
 
-      {/* ৩. Partners Section */}
+     
       <section className="pb-20 lg:pb-32">
         <Partners />
       </section>

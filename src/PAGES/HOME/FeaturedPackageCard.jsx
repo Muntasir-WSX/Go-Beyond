@@ -3,7 +3,15 @@ import { MapPin, Clock, Calendar, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const FeaturedPackageCard = ({ pckg }) => {
-  const { _id, tour_name, image, duration, destination, price, departure_date } = pckg;
+  const {
+    _id,
+    tour_name,
+    image,
+    duration,
+    destination,
+    price,
+    departure_date,
+  } = pckg;
   const navigate = useNavigate();
 
   return (
@@ -26,7 +34,7 @@ const FeaturedPackageCard = ({ pckg }) => {
           <MapPin size={14} className="text-[#ff5e37]" />
           {destination}
         </div>
-        
+
         <h3 className="text-xl font-black text-[#1a1b2e] mb-4 line-clamp-1 group-hover:text-[#ff5e37] transition-colors">
           {tour_name}
         </h3>
@@ -42,7 +50,7 @@ const FeaturedPackageCard = ({ pckg }) => {
           </div>
         </div>
 
-        <button 
+        <button
           onClick={() => navigate(`/tourpackages/${_id}`)}
           className="w-full mt-6 py-3 bg-[#ff5e37] text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-black hover:text-white transition-all duration-300"
         >

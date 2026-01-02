@@ -56,7 +56,6 @@ const DestinationGrid = () => {
               </h3>
             </div>
 
-            {/* Link Overlay */}
             <a href="/packages" className="absolute inset-0 z-20"></a>
           </motion.div>
         ))}

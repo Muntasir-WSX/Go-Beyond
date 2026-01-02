@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layouts from "../Main Layouts/Layouts";
 import Home from "../PAGES/HOME/Home";
-import ErrorPage from "../Shared Components/ErrorPage"; 
+import ErrorPage from "../Shared Components/ErrorPage";
 import AboutUs from "../PAGES/ABoutUs/ABoutUs";
 import SignIn from "../PAGES/AuthPages/SignIn";
 import Register from "../PAGES/AuthPages/Register";
@@ -17,60 +17,72 @@ import UpdatePackage from "../ManagePackage/UpdatePackage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layouts></Layouts>,
-    errorElement: <ErrorPage></ErrorPage>, 
+    element: <Layouts />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: <Home />,
       },
       {
-         path: "/tourpackages/:id",
-         element: <TourPackageDetails></TourPackageDetails>,
-         loader: ({params}) => fetch(`https://go-beyond-server-mu.vercel.app//tourPackages/${params.id}`),
+        path: "/tourpackages/:id",
+        element: <TourPackageDetails />,
+
+        loader: ({ params }) =>
+          fetch(
+            `https://go-beyond-server-mu.vercel.app/tourpackages/${params.id}`
+          ),
       },
       {
-            path: "/book-package/:id",
-            element: <PrivateRoutes><BookPackage></BookPackage></PrivateRoutes>,
+        path: "/book-package/:id",
+        element: (
+          <PrivateRoutes>
+            <BookPackage />
+          </PrivateRoutes>
+        ),
       },
       {
-    path: "/update-package/:id",
-    element: <PrivateRoutes> <UpdatePackage/> </PrivateRoutes>,
-    loader: ({params}) => fetch(`https://go-beyond-server-mu.vercel.app//tourpackages/${params.id}`),
-},
+        path: "/update-package/:id",
+        element: (
+          <PrivateRoutes>
+            {" "}
+            <UpdatePackage />{" "}
+          </PrivateRoutes>
+        ),
+
+        loader: ({ params }) =>
+          fetch(
+            `https://go-beyond-server-mu.vercel.app/tourpackages/${params.id}`
+          ),
+      },
       {
-         path: "/packages",
-         element: <All_Package></All_Package>,
+        path: "/packages",
+        element: <All_Package />,
       },
       {
         path: "/about-us",
-        element: <AboutUs></AboutUs>,
-      },
-      
-      // Auth Routs
-
-      {
-          path: "/add-package",
-          element: <AddPackage></AddPackage>,
+        element: <AboutUs />,
       },
       {
-          path: "/manage-packages",
-          element: <ManagePackage></ManagePackage>,
+        path: "/add-package",
+        element: <AddPackage />,
       },
       {
-          path: "/my-bookings",
-          element: <MyBookings></MyBookings>,
-      },
-
-      {
-          path: "/signin",
-          element: <SignIn></SignIn>,
+        path: "/manage-packages",
+        element: <ManagePackage />,
       },
       {
-          path: "/register",
-          element: <Register></Register>,
+        path: "/my-bookings",
+        element: <MyBookings />,
       },
-      // ভবিষ্যতে অন্য কোনো পেজ (যেমন About বা Contact) এখানে যোগ করতে পারেন
+      {
+        path: "/signin",
+        element: <SignIn />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
     ],
   },
 ]);

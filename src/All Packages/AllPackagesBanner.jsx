@@ -2,8 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-
-// আপনার ছবিগুলো ইম্পোর্ট করুন
 import bogalake from "../assets/bogalake.png";
 import Tourist from "../assets/Tourist.jpg"; 
 import nafakhum from "../assets/nafakhum.png";
@@ -13,8 +11,6 @@ const AllPackagesBanner = () => {
     return (
         <section className="bg-white py-16 lg:py-24 overflow-hidden border-b border-gray-200">
             <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20">
-                
-                {/* 📸 Right Side: Image Grid with GetToKnowUs Style */}
                 <motion.div
                     initial={{ opacity: 0, x: 60 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -23,7 +19,7 @@ const AllPackagesBanner = () => {
                     className="w-full lg:w-1/2"
                 >
                     <div className="relative p-4">
-                        {/* The Window Grid Style */}
+                      
                         <div className="relative z-10 grid grid-cols-2 gap-4">
                             {[bogalake, Tourist, nafakhum, saintmartin].map((img, index) => (
                                 <motion.div
@@ -41,11 +37,8 @@ const AllPackagesBanner = () => {
                             ))}
                         </div>
 
-                        {/* Corner Accents (GetToKnowUs Style) */}
                         <div className="absolute top-0 right-0 w-32 h-32 border-t-4 border-r-4 border-[#ff5e37] rounded-tr-3xl z-0"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 border-b-4 border-l-4 border-[#ff5e37] rounded-bl-3xl z-0"></div>
-
-                        {/* Floating Experience Badge */}
                         <motion.div
                             initial={{ scale: 0 }}
                             whileInView={{ scale: 1 }}
@@ -61,8 +54,6 @@ const AllPackagesBanner = () => {
                         </motion.div>
                     </div>
                 </motion.div>
-
-                {/* 📝 Left Side: Content with Matching Style */}
                 <motion.div
                     initial={{ opacity: 0, x: -60 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -103,20 +94,6 @@ const AllPackagesBanner = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* বাটন (Added View Packages)
-                    <motion.div
-                        whileHover={{ y: -5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="pt-4"
-                    >
-                        <Link
-                            to="/packages"
-                            className="inline-flex items-center gap-4 bg-[#ff5e37] text-white px-12 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#1a1b2e] transition-all duration-300 shadow-xl shadow-[#ff5e37]/20"
-                        >
-                            View All Packages <ChevronRight size={18} />
-                        </Link>
-                    </motion.div> */}
                 </motion.div>
 
             </div>

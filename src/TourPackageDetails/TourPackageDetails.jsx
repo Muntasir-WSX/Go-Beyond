@@ -92,7 +92,7 @@ const TourPackageDetails = () => {
                             </div>
                         </div>
 
-                        {/* Highlight Grid (All Properties Here) */}
+                        {/* Highlight Grid  */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <HighlightCard label="Departure" value={departure_location} icon={<Navigation size={20}/>} />
                             <HighlightCard label="Target Destination" value={destination} icon={<Map size={20}/>} />

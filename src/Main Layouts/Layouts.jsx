@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"; // ১. useEffect ইম্পোর্ট করুন
+import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Nav from "../Shared Components/Nav";
 import Footer from "../Shared Components/Footer";

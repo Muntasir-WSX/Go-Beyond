@@ -27,7 +27,7 @@ const Nav = () => {
     { name: "About Us", path: "/about-us", icon: <Info size={18} /> },
   ];
 
-  // প্রোফাইল মেনুর লিঙ্কগুলোর জন্য অ্যাক্টিভ স্টাইল (Orange Underline)
+  // Active Styles
   const getProfileLinkClass = ({ isActive }) =>
     `flex items-center justify-between px-4 py-2.5 hover:bg-gray-50 transition-all font-bold text-xs uppercase tracking-tight text-gray-700 group ${
       isActive ? "text-[#ff5e37]" : ""
@@ -51,7 +51,10 @@ const Nav = () => {
       <div className="drawer-content flex flex-col">
         <nav className="bg-[#1a1b2e] text-white px-6 py-4 flex items-center justify-between shadow-lg">
           <div className="flex-none lg:hidden">
-            <label htmlFor="my-drawer" className="btn btn-ghost btn-circle text-[#ff5e37]">
+            <label
+              htmlFor="my-drawer"
+              className="btn btn-ghost btn-circle text-[#ff5e37]"
+            >
               <Menu size={24} />
             </label>
           </div>
@@ -67,7 +70,11 @@ const Nav = () => {
 
           <div className="hidden lg:flex items-center gap-10 font-bold uppercase text-[12px] tracking-widest">
             {navLinks.map((link) => (
-              <NavLink key={link.name} to={link.path} className={getActiveLinkClass}>
+              <NavLink
+                key={link.name}
+                to={link.path}
+                className={getActiveLinkClass}
+              >
                 {link.name}
               </NavLink>
             ))}
@@ -80,7 +87,11 @@ const Nav = () => {
                 className="w-10 h-10 rounded-full overflow-hidden hover:ring-2 hover:ring-[#ff5e37] transition-all border border-gray-600 flex items-center justify-center bg-gray-800"
               >
                 {user && user.photoURL ? (
-                  <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
+                  <img
+                    src={user.photoURL}
+                    alt="User"
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <User size={20} className="text-white" />
                 )}
@@ -88,21 +99,42 @@ const Nav = () => {
 
               {isUserOpen && (
                 <>
-                  <div className="fixed inset-0 z-10" onClick={() => setIsUserOpen(false)}></div>
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setIsUserOpen(false)}
+                  ></div>
                   <div className="absolute right-0 mt-3 w-56 bg-white text-gray-800 rounded-xl shadow-2xl py-3 border border-gray-100 z-20 animate-in fade-in slide-in-from-top-2 duration-200">
                     {user ? (
                       <div className="space-y-1">
                         <div className="px-4 py-2 border-b border-gray-100 mb-2">
-                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Signed in as</p>
-                          <p className="font-black text-sm text-[#1a1b2e] truncate">{user.displayName || 'Guest'}</p>
-                          <p className="text-[10px] text-gray-500 truncate">{user.email}</p>
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                            Signed in as
+                          </p>
+                          <p className="font-black text-sm text-[#1a1b2e] truncate">
+                            {user.displayName || "Guest"}
+                          </p>
+                          <p className="text-[10px] text-gray-500 truncate">
+                            {user.email}
+                          </p>
                         </div>
 
-                        {/* ড্রপডাউন লিঙ্কস উইথ অরেঞ্জ আন্ডারলাইন লজিক */}
+                        {/* Dropdown links with orange underline logic */}
                         {[
-                          { to: "/add-package", icon: <PlusCircle size={16} />, label: "Add Package" },
-                          { to: "/manage-packages", icon: <Settings size={16} />, label: "Manage My Packages" },
-                          { to: "/my-bookings", icon: <BookmarkCheck size={16} />, label: "My Bookings" }
+                          {
+                            to: "/add-package",
+                            icon: <PlusCircle size={16} />,
+                            label: "Add Package",
+                          },
+                          {
+                            to: "/manage-packages",
+                            icon: <Settings size={16} />,
+                            label: "Manage My Packages",
+                          },
+                          {
+                            to: "/my-bookings",
+                            icon: <BookmarkCheck size={16} />,
+                            label: "My Bookings",
+                          },
                         ].map((item) => (
                           <NavLink
                             key={item.to}
@@ -113,7 +145,13 @@ const Nav = () => {
                             {({ isActive }) => (
                               <div className="w-full">
                                 <div className="flex items-center gap-3">
-                                  <span className={isActive ? "text-[#ff5e37]" : "text-gray-400 group-hover:text-[#ff5e37]"}>
+                                  <span
+                                    className={
+                                      isActive
+                                        ? "text-[#ff5e37]"
+                                        : "text-gray-400 group-hover:text-[#ff5e37]"
+                                    }
+                                  >
                                     {item.icon}
                                   </span>
                                   <span>{item.label}</span>
@@ -127,20 +165,33 @@ const Nav = () => {
                         ))}
 
                         <div className="border-t border-gray-100 mt-2 pt-2">
-                          <button onClick={handleLogOut} className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 transition-colors font-black text-xs uppercase tracking-tight text-red-500">
+                          <button
+                            onClick={handleLogOut}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 transition-colors font-black text-xs uppercase tracking-tight text-red-500"
+                          >
                             <LogOut size={16} /> Logout
                           </button>
                         </div>
                       </div>
                     ) : (
                       <div className="space-y-1">
-                        <Link to="/signin" onClick={() => setIsUserOpen(false)} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                        <Link
+                          to="/signin"
+                          onClick={() => setIsUserOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                        >
                           <LogIn size={16} className="text-[#ff5e37]" />
                           <span className="font-bold text-sm">Login</span>
                         </Link>
-                        <Link to="/register" onClick={() => setIsUserOpen(false)} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-50">
+                        <Link
+                          to="/register"
+                          onClick={() => setIsUserOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-50"
+                        >
                           <UserPlus size={16} className="text-[#ff5e37]" />
-                          <span className="font-bold text-sm">Register Now</span>
+                          <span className="font-bold text-sm">
+                            Register Now
+                          </span>
                         </Link>
                       </div>
                     )}
@@ -152,16 +203,25 @@ const Nav = () => {
         </nav>
       </div>
 
-      {/* Drawer Sidebar */}
+      {/* Sidebar */}
       <div className="drawer-side">
-        <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+        <label
+          htmlFor="my-drawer"
+          aria-label="close sidebar"
+          className="drawer-overlay"
+        ></label>
         <ul className="menu p-6 w-80 min-h-full bg-[#1a1b2e] text-white">
           <div className="flex items-center justify-between mb-10">
             <div className="flex items-center">
               <Anchor size={24} className="text-[#ff5e37] mr-1" />
-              <span className="text-xl font-black tracking-tighter">Go<span className="text-gray-400">Beyond</span></span>
+              <span className="text-xl font-black tracking-tighter">
+                Go<span className="text-gray-400">Beyond</span>
+              </span>
             </div>
-            <label htmlFor="my-drawer" className="btn btn-ghost btn-circle text-gray-400">
+            <label
+              htmlFor="my-drawer"
+              className="btn btn-ghost btn-circle text-gray-400"
+            >
               <X size={24} />
             </label>
           </div>
@@ -169,10 +229,21 @@ const Nav = () => {
           <div className="space-y-2">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <NavLink to={link.path} className={({ isActive }) => `flex items-center gap-4 py-4 px-4 rounded-xl transition-all text-lg font-medium group ${isActive ? "bg-[#ff5e37] text-white" : "hover:bg-gray-800"}`}>
+                <NavLink
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 py-4 px-4 rounded-xl transition-all text-lg font-medium group ${
+                      isActive ? "bg-[#ff5e37] text-white" : "hover:bg-gray-800"
+                    }`
+                  }
+                >
                   {({ isActive }) => (
                     <>
-                      <span className={`${isActive ? "text-white" : "text-[#ff5e37]"} group-hover:text-white`}>
+                      <span
+                        className={`${
+                          isActive ? "text-white" : "text-[#ff5e37]"
+                        } group-hover:text-white`}
+                      >
                         {link.icon}
                       </span>
                       {link.name}

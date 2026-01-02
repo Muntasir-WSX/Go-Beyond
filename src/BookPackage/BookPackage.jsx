@@ -10,8 +10,6 @@ const BookPackage = () => {
     const { user } = UserAuth();
     const navigate = useNavigate();
     const [tour, setTour] = useState(null);
-
-    // Fetch tour package details
     useEffect(() => {
         axios.get(`https://go-beyond-server-mu.vercel.app/tourpackages/${packageId}`)
             .then(res => setTour(res.data))
@@ -44,10 +42,7 @@ const BookPackage = () => {
                 bookingData, 
                 { withCredentials: true }
             );
-
-            // FIXED: Your server sends bookingResult directly as res.data
-            // We check for res.data.insertedId
-            if (res.data.insertedId) {
+            if (res.data.insertedId || res.status === 200) {
                 toast.success('Booking Successful!', {
                     duration: 3000,
                     style: {
@@ -64,11 +59,11 @@ const BookPackage = () => {
                 });
 
                 setTimeout(() => {
-                    navigate('/myBookings'); 
+                    navigate('/my-bookings'); 
                 }, 2000);
             }
         } catch (error) {
-            console.error("Booking failed:", error);
+            console.error("Full Axios Error:", error.response?.data || error.message);
             toast.error('Failed to book. Please try again.', {
                 style: {
                     background: '#1a1b2e',
@@ -136,7 +131,7 @@ const BookPackage = () => {
                         {/* Special Note */}
                         <div className="space-y-2">
                             <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Special Note (Optional)</label>
-                            <textarea name="notes" rows="3" placeholder="Any specific requirements or allergies?" className="w-full border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-[#ff5e37] focus:border-transparent outline-none transition-all"></textarea>
+                            <textarea name="notes" rows="3" placeholder="Any specific requirements?" className="w-full border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-[#ff5e37] focus:border-transparent outline-none transition-all"></textarea>
                         </div>
 
                         {/* Submit Button */}

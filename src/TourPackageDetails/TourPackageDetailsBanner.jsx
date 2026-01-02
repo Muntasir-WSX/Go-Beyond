@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Sparkles, Calendar } from 'lucide-react';
-
-// ইমেজগুলো শাফেল করে ইমপোর্ট করা হয়েছে
 import image3 from "../assets/travelar2.jpg";
 import image1 from "../assets/bogalake.png"; 
 import image4 from "../assets/travelar3.jpg";

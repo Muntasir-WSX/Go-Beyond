@@ -15,10 +15,9 @@ import {
 } from "lucide-react";
 
 const UpdatePackage = () => {
-  const loadedPackage = useLoaderData(); // রাউটার লোডার থেকে আসা ডাটা
+  const loadedPackage = useLoaderData();
   const navigate = useNavigate();
 
-  // গাইড নাম এডিটেবল রাখার জন্য স্টেট
   const [guideName, setGuideName] = useState(loadedPackage?.guide_name || "");
 
   const handleUpdatePackage = async (e) => {
@@ -39,7 +38,6 @@ const UpdatePackage = () => {
     };
 
     try {
-      // আপনার ব্যাকএন্ডের ১০ নম্বর API অনুযায়ী: PATCH /updateTourPackage/:id
       const res = await axios.patch(
         `https://go-beyond-server-mu.vercel.app//updateTourPackage/${loadedPackage._id}`,
         updatedPackageData
@@ -52,7 +50,7 @@ const UpdatePackage = () => {
           icon: "success",
           confirmButtonColor: "#ff5e37",
         });
-        navigate("/manage-packages"); // আপডেট শেষে ম্যানেজ পেজে ফেরত যাবে
+        navigate("/manage-packages");
       } else {
         toast.error("No changes were made.");
       }
@@ -77,8 +75,10 @@ const UpdatePackage = () => {
             </p>
           </div>
 
-          <form onSubmit={handleUpdatePackage} className="p-8 md:p-12 space-y-6">
-            {/* ট্যুর ও গন্তব্য */}
+          <form
+            onSubmit={handleUpdatePackage}
+            className="p-8 md:p-12 space-y-6"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400">
@@ -111,8 +111,6 @@ const UpdatePackage = () => {
                 </div>
               </div>
             </div>
-
-            {/* গাইড ইনফো */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400">
@@ -151,8 +149,6 @@ const UpdatePackage = () => {
                 </div>
               </div>
             </div>
-
-            {/* ইমেজ ও প্রাইস */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400">
@@ -190,8 +186,6 @@ const UpdatePackage = () => {
                 </div>
               </div>
             </div>
-
-            {/* ডেট ও লোকেশন */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-gray-400 ml-1">
