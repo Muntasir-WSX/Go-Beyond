@@ -86,7 +86,7 @@ const ManagePackage = () => {
             </p>
           </div>
           <Link
-            to="/addPackage"
+            to="/add-package"
             className="flex items-center gap-2 bg-[#00a884] text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-green-100 hover:bg-[#1a1b2e] transition-all transform active:scale-95"
           >
             <Plus size={18} /> Add New Package
